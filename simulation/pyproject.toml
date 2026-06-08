@@ -1,0 +1,8 @@
+[project]
+name = "geodesics-of-care-sim"
+version = "0.1.0"
+description = "Exact care-MDP analyses for Geodesics of Care: the quasi-metric, the price of autonomy, and care-curvature"
+requires-python = ">=3.10"
+dependencies = [
+    "matplotlib>=3.8",
+]
