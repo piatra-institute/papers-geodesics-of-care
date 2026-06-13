@@ -2,6 +2,18 @@
 
 Dated log of editorial passes and verification runs. Newest first. See the workspace docs (run `papers docs`): writing-pipeline.md §7 and refresh-pipeline.md.
 
+## 2026-06-13 — voice reform
+
+Editorial pass to remove AI-writing tells per tooling/docs/voice.md.
+
+Pet-vocabulary: the only two gate-flagged tells. "no single contested formalism carries the weight" (§6) -> "the argument does not rest on any single contested formalism"; "where the geometry earns its keep" (§8) -> "what the geometry adds".
+
+Structure: the gate flagged the formulaic skeleton (numbered sections + generic "Conclusion"). Limits are already folded into §9 ("three limits"), so no bolt-on section existed to fold. Retitled §10 "Conclusion" -> "What the geometry organizes and what it withholds", naming the substance of the closing.
+
+Density: deleted one filler "exactly" in §1 ("is exactly what a theory should be built to state" -> "is what..."). The remaining "exactly"/"precisely" uses are genuine exact-computation language in §7 ("Computed Exactly", "solved exactly", "exact dynamic programming") and were left intact per scope (abstract/opening/closing only). Substantive enumerations and the abstract's three model-result claims were left alone.
+
+Verification: voice 0 errors / 0 warns (structure advisory cleared); refs 34 cited / 34 bib, 0 missing, 0 unused (unchanged from baseline); build succeeds, 0 missing-character warnings; claims 17 decimal claims, 0 without a matching simulation value; check => PASS. No numbers, equations, figure values, or citations altered.
+
 ## 2026-06-08 — initial full build
 
 Scope: first complete draft from the three seed chats. Wrote the simulation, the paper, and all provenance docs; brought the paper to a clean build.
