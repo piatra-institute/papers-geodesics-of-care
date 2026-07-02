@@ -1,12 +1,12 @@
-# Geodesics of Care: A Scale-Free Geometry of Concern
+# Geodesics of Care: Concern as Transport on the Manifold of Viability
 
-Care is usually studied as an emotion or a virtue. This paper treats it as a measurable relation: system A cares for B when B's *viability* enters A's perception, model, valuation, and action. The least-cost admissible path by which A comes to reach B, the **care-distance**, is a *directed quasi-metric*, it is asymmetric and can violate the triangle inequality, so the moral world is a curved, broken manifold rather than a circle around the self. The paper gives the manifold's vocabulary (radius, diameter, depth, curvature, topology, singularity) working definitions, fixes the **autonomy constraint** that separates care from domination (and coincides, exactly, with the AI corrigibility requirement), and reads moral psychology as the measurement of curvature and institutions as engineered care-geometries. A minimal control model, solved exactly, makes three claims concrete: the quasi-metric; the **price of autonomy** (preserving B's option-entropy costs only 0.028 of B's viability, against the ~0.5 lost to abandonment); and **care-curvature** (a distant stranger costs 11.44× the policy deformation per unit of good done that kin cost). The account is organizational and bounded: it measures coupling, cost, and the preservation of agency, and it does not measure, or explain, what concern feels like.
+Care is usually studied as a feeling, a virtue, or a practice. This paper takes a colder primitive: system A cares for B when B's *viability* enters A's perception, model, and choice of action. The claim is that this relation has a genuine geometry, and that the geometry is the **information geometry** of the other's viability. Represent B as a distribution over the states in which it can persist; the space of such distributions is a statistical manifold whose metric is not chosen but forced, since Chentsov's theorem makes the **Fisher-Rao metric** the only one invariant under sufficient statistics. On the three-state simplex it is a sphere of radius 2 with constant curvature a quarter, a value a from-scratch Brioschi curvature routine recovers to machine precision. Care is then *transport*: moving B along a geodesic toward the viable region, with the **care-distance** the geodesic's length. Three results follow from the construction. Care-distance is a genuine metric, so it obeys the triangle inequality (correcting an earlier quasi-metric framing) and the real obstruction is **curvature**: a care-triangle carries a measurable spherical excess, a quarter of its area, by Gauss-Bonnet. Direction enters through the carer's **control metric**, a conformal reweighting whose curvature is no longer constant and under which a distant stranger costs 5× what kin cost along the same path. And the **autonomy constraint** becomes a boundary fact: total coercion drives B to a zero-entropy vertex, which is Canguilhem's definition of the pathological, a life reduced to a single norm; holding B off that boundary costs little viability, while abandonment costs half. What the geometry cannot reach is the inside of the relation, and the paper ends there, with Ruyer's *survol absolu*.
 
 ## Contents
 
-- `paper/PAPER.md` — the paper (10 sections); `paper/PAPER.pdf` — the build.
-- `simulation/` — three exact, deterministic analyses behind §7, plus the two embedded figures. Entry point `run_all.py`; see `simulation/README.md`.
-- `brief.md`, `research.md`, `sources.md`, `audit.md` — provenance: the pre-research brief, tiered findings, the frozen 34-entry bibliography, the dated pass log.
+- `paper/PAPER.md` — the paper (7 sections); `paper/PAPER.pdf` — the build.
+- `simulation/` — four exact, deterministic information-geometry studies (manifold self-test, Gauss-Bonnet routing, directed care, the price of autonomy), plus three embedded figures. Entry point `run_all.py`; see `simulation/README.md`.
+- `brief.md`, `research.md`, `sources.md`, `audit.md` — provenance: the pre-research brief, tiered findings, the frozen bibliography, the dated pass log.
 - `chats/` — the origin chats (gitignored, kept local).
 
 ## Build
@@ -23,6 +23,6 @@ Requires `pandoc` and `xelatex` on PATH. The figures resolve from `paper/PAPER.m
 cd simulation && uv run run_all.py   # -> output/results.json + output/figures/
 ```
 
-Every decimal in §7 is a key in `simulation/output/results.json`. All three analyses are deterministic (exact arithmetic, exact dynamic programming, closed-form KL); there is no seed.
+Every decimal in the paper is a key in `simulation/output/results.json`. All four studies are deterministic (exact Fisher-Rao geometry, closed-form Gauss-Bonnet, exact entropy-constrained optimum); there is no seed. The curvature routine's recovery of the exact value 0.25 for the base Fisher metric is the self-test that certifies the differential-geometry machinery.
 
 Part of [piatra-papers](https://github.com/piatra-institute). See the workspace docs for the research and writing pipelines.

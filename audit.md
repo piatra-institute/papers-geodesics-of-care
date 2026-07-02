@@ -45,3 +45,25 @@ Notes / deferred:
 - de Waal entry written "Waal, F. B. M. de (2008)" so the surname token parses for the refs gate (a leading lowercase particle would drop the bib line).
 - Spin-ice / sheaf / optimal-transport extensions from the chats left out of scope.
 - Status is `built`, not `published`: deploying to the web (sync + page.tsx) is the maintainer's pipeline.
+
+---
+
+## 2026-07-02 — reform pass (exemplar rebuild)
+
+Scope: full rebuild of the paper as the corpus reference exemplar, addressing the audit's charge that "curvature" was decoration (a redefinition of help-inefficiency, with no metric tensor and an engineered triangle-inequality "violation"). The paper now rests on real information geometry.
+
+What changed:
+
+- simulation/analyses.py: rewritten from scratch. Four exact, deterministic studies on the Fisher-Rao manifold of the other's viability distribution (the 2-simplex). `fr_distance` = 2·arccos(Σ√(p·q)) (great-circle on the radius-2 sphere); `fr_geodesic` (slerp); `fisher_EFG` + `gaussian_curvature` (Brioschi formula from numerical metric partials). study_manifold (curvature self-test returns exactly 0.25, triangle inequality holds); study_routing (Gauss-Bonnet: spherical excess 0.1748 = 1/4 × area 0.6994; routed 2.34 > direct 1.8862); study_directed (control metric g_A = f·g_Fisher, directedness asymmetry 1.5879, kin gradient distant/kin 5.0, care-curvature varies 0.1395–0.2601); study_autonomy (entropy-floor optimum is a Gibbs/e-geodesic tilt; price of autonomy 0.1521 vs abandonment 0.5).
+- simulation/figures.py + run_all.py: rewritten for the four studies. Three figures: geometry.png (geodesic care-triangle + care-metric curvature field), care.png (kin gradient + directedness), autonomy.png (viability-vs-entropy-floor + policy distributions). Old autonomy.png/curvature.png retired.
+- paper/PAPER.md: full rewrite, 10 sections -> 7, de-templated (no "What the geometry organizes/withholds" ceremonial closer; ends on Ruyer's survol absolu as the phenomenological limit, folded into the argument rather than a bolt-on limits section). Corrected the quasi-metric error: care-distance IS a genuine metric, so the triangle inequality holds and the real obstruction is curvature (Gauss-Bonnet), not brokenness. Deep-cut bibliography woven substantively: Chentsov (metric uniqueness), Rao, Amari-Nagaoka, Ay et al.; Whitehead's "concern," Jonas (needful freedom, infant asymmetry), Canguilhem (single norm = pathological), Goldstein, Ruyer (absolute survey), Uexküll, Simondon, Rosen, Powers, Ashby, Aubin; care ethics (Noddings, Tronto, Ruddick, Kittay, Sen, Nussbaum), Murdoch/Weil (attention), Levinas.
+- metadata.yaml + README.md: new title "Concern as Transport on the Manifold of Viability"; abstract rewritten to the information-geometry account.
+
+Verified corrections applied: Weil "attention is the rarest and purest form of generosity" attributed to the 1942 letter to Bousquet (Seventy Letters, trans. Rees, 1965), not Gravity and Grace; Levinas softened to freedom "founded/invested," not "preceded"; Chentsov cited as the finite-case uniqueness with Ay et al. for the general manifold; Friston free-energy phrasing F = D_KL[q(s)‖p(s|o)] − ln p(o).
+
+Verification:
+
+- voice: 0 errors (6 review-candidate warns, all load-bearing contrasts the paper develops).
+- refs: 32 cited / 32 bib / 0 missing / 0 unused.
+- claims: 31 decimal claims, 0 without a matching simulation value.
+- build: figures embedded, math and diacritics render; check => PASS. Synced to web public/.

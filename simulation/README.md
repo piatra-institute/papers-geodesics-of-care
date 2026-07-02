@@ -1,27 +1,33 @@
 # Simulation — Geodesics of Care
 
-Three exact, deterministic analyses behind §7 of the paper. No random seed: every number is exact arithmetic, exact dynamic programming, or a closed-form KL.
+Four exact, deterministic information-geometry studies behind the paper. No random seed: every number is exact Fisher-Rao geometry, a closed-form Gauss-Bonnet quantity, or an exact entropy-constrained optimum.
 
 ```bash
 cd simulation
 uv run run_all.py      # writes output/results.json and output/figures/*.png
 ```
 
-Every decimal cited in §7 is a key in `output/results.json` (the `papers claims` gate checks the paper's prose decimals against it).
+Every decimal cited in the paper is a key in `output/results.json` (the `papers claims` gate checks the paper's prose decimals against it).
+
+## The manifold
+
+The cared-for is a distribution over three viability states (failing, coping, flourishing), a point on the 2-simplex. Chentsov's theorem forces the Fisher-Rao metric, under which the map `p -> 2*sqrt(p)` is an isometry onto a sphere of radius 2. The geodesic distance is `d(p,q) = 2*arccos(sum_i sqrt(p_i q_i))`, the great-circle distance, and the constant Gaussian curvature is 1/4.
 
 ## What it computes
 
 `analyses.py`
 
-- **`care_quasimetric`** — the direct-coupling cost `d(X→Y) = repcost + actcost`, with representational cost convex (squared) in category distance and action cost set by the helper's capability. Yields the asymmetry `d(A→B)=1.2 ≠ d(B→A)=1.5` and the triangle-inequality failure `d(A→C)=4.2 > d(A→B)+d(B→C)=2.7`. Care-distance is a directed quasi-metric.
-- **`price_of_autonomy`** — a finite-horizon control problem on a 9-state viability ladder (death absorbing at the bottom), horizon 8, start mid-ladder. A carer sets the distribution over B's move at each state to maximise B's expected terminal viability, subject to a floor on the Shannon entropy of that distribution (the autonomy constraint). Solved by exact backward induction over a denominator-12 menu of distributions, so the floors `ln 2` and `ln 3` are hit exactly. Coercion (H=0) reaches viability 1.0 with zero options; autonomy-preserving care (H≥ln2) reaches 0.972; abandonment (H=ln3, unguided random walk) falls to 0.495 with death probability 0.088. Price of autonomy = 0.028.
-- **`care_curvature`** — κ, the policy deformation in nats (Bernoulli KL from a baseline help-probability 0.1) required per unit of viability delivered (gain 0.2), as relational efficacy falls. Kin 0.768, stranger 2.554, distant stranger 8.789; distant/kin = 11.44×.
+- **`study_manifold`** — the self-test. `gaussian_curvature`, built from the metric components and the Brioschi formula with numerical partials, is fed the Fisher metric on a grid and returns 0.25 with maximum deviation 0.0. Confirms the triangle inequality holds (largest slack 0). This certifies the differential-geometry machinery the other studies rely on.
+- **`study_routing`** — Gauss-Bonnet on a care-triangle (failing / coping / flourishing vertices). Interior angles sum to 3.3164; the spherical excess 0.1748 equals 1/4 times the enclosed area 0.6994. Routing `A->B->C` costs 2.34 against the direct `A->C` 1.8862 (gap 0.4539): concern does not route, because the manifold is curved, not because any metric axiom fails.
+- **`study_directed`** — direction from the carer's control metric `g_A = f_A * g_Fisher`, a conformal reweighting by legibility. Two carers on the same geodesic pay 2.3283 (attuned) vs 3.6972 (blind), asymmetry 1.5879. The kin gradient (cost = geodesic length / legibility) runs 1.6095 (kin) to 8.0476 (distant stranger), a factor of 5.0. Under the reweighting the curvature is no longer constant, ranging 0.1395 to 0.2601.
+- **`study_autonomy`** — the viability-maximizing distribution subject to a Shannon-entropy floor is an exponential-family (Gibbs) tilt, a point on the e-geodesic. Coercion (H=0) reaches viability 1.0 at a zero-entropy vertex; the autonomy floor (H>=ln2) reaches 0.8479; abandonment (uniform) falls to 0.5. Price of autonomy = 0.1521.
 
-`figures.py` (pure plotters, read the results dict)
+`figures.py` (pure plotters, recompute geometry and read scalars from the results dict)
 
-- `output/figures/autonomy.png` — viability vs the option-entropy floor (the price of autonomy), and the terminal-state distributions under each regime.
-- `output/figures/curvature.png` — κ vs relational curvature with kin/stranger/distant marked, and the quasi-metric (asymmetry bars + triangle-failure bars).
+- `output/figures/geometry.png` — the geodesic care-triangle with its spherical excess, and the care-metric curvature field across the simplex.
+- `output/figures/care.png` — the kin gradient (cost vs legibility) and directedness (two carers on one geodesic).
+- `output/figures/autonomy.png` — viability vs the option-entropy floor (the price of autonomy), and the distribution each policy leaves the other in.
 
 ## Status
 
-Complete and minimal. The model is a fact about itself: it shows the structural features claimed for care-distance are realizable and coherent, not that any empirical agent exhibits these particular magnitudes (the "calibration is not fitting" discipline). Dependencies: `matplotlib` only (see `pyproject.toml`).
+Complete. The geometry is not stipulated: the metric is forced by Chentsov's theorem and the curvature self-test recovers the known value exactly, so the results are facts about the Fisher-Rao manifold rather than about tuned parameters. Dependencies: `numpy` and `matplotlib` (see `pyproject.toml`).

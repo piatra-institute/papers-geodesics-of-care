@@ -1,277 +1,380 @@
-"""Exact, deterministic analyses for *Geodesics of Care*.
+"""Geodesics of Care — the viability manifold as genuine information geometry.
 
-Three computations, each an exact property of a defined model, no random seed:
+Care is modelled as transport on the statistical manifold of a target's
+viability distribution. The manifold carries the Fisher-Rao metric, which
+Chentsov's theorem singles out (on a finite sample space) as the unique metric
+invariant under sufficient statistics, so the geometry is not a chosen analogy.
+On the (n-1)-simplex the Fisher-Rao metric is isometric, via p -> 2*sqrt(p), to
+the positive orthant of a sphere of radius 2: constant curvature 1/4, geodesic
+distance d(p,q) = 2*arccos(sum_i sqrt(p_i q_i)), maximal distance pi.
 
-  A. care_quasimetric — the direct-coupling cost d(X->Y) is a directed
-     quasi-metric: it is asymmetric (d(A,B) != d(B,A)) and it violates the
-     triangle inequality (d(A,C) > d(A,B)+d(B,C)) whenever the cost of modelling
-     a more distant being grows faster than linearly. Plain arithmetic over the
-     model; reported exactly.
+Four studies, all deterministic and exact (no seed):
 
-  B. price_of_autonomy — a finite-horizon control problem (value iteration on a
-     viability ladder) in which a carer A shapes the move-distribution of a
-     target B. Maximising B's expected viability with no constraint drives B's
-     per-step option-entropy to zero (the padded room). Requiring a floor on
-     that entropy preserves B's options at a measurable cost in viability. The
-     gap is the price of autonomy. Exact DP over a discretised action menu.
+  A. The manifold. Validate that care-distance is a genuine metric and that a
+     from-scratch Gaussian-curvature routine (Brioschi) returns 1/4 on the
+     Fisher metric, which certifies the differential-geometry machinery used
+     downstream.
+  B. Routing. A geodesic care-triangle: the triangle inequality HOLDS (the old
+     "triangle violation" was an artefact of a non-metric cost), and the real
+     invariant is the spherical excess, angle-sum minus pi = curvature x area
+     (Gauss-Bonnet). Concern routed through an intermediary is never cheaper.
+  C. Directed care. Directedness comes from the carer's control metric, a
+     conformal reweighting g_A = f_A * g_Fisher of the base geometry: f_A
+     differs by carer, so the cost is asymmetric, and where legibility falls
+     the metric's curvature departs from 1/4. Kin/stranger/distant costs are
+     geodesic lengths under this metric.
+  D. The price of autonomy. Viability is w.p on the 3-state simplex. Total
+     coercion drives the target to a vertex (a delta, zero entropy: Canguilhem's
+     single norm). The autonomy floor caps the entropy loss; the constrained
+     optimum is an exponential-family (Gibbs) tilt, a point on the e-geodesic
+     from the uniform distribution. The price of autonomy is the viability
+     coercion buys over that floor.
 
-  C. care_curvature — kappa, the policy deformation (in nats of KL divergence
-     from a baseline self-policy) required per unit of viability delivered to a
-     target, as a function of relational curvature. Kin are geometrically cheap;
-     distant strangers cost an order of magnitude more per unit of good done.
-     Closed-form Bernoulli KL.
-
-Every number cited in the paper's modelled section is a key in the dict
-returned by run().
+    cd simulation && uv run run_all.py
 """
 from __future__ import annotations
 
-import math
-from itertools import product
+import numpy as np
 
-# ---------------------------------------------------------------------------
-# A. The care quasi-metric: asymmetry and triangle-inequality failure
-# ---------------------------------------------------------------------------
-# Direct-coupling cost for X to preserve/improve Y's viability:
-#
-#     d(X -> Y) = rep_weight * repcost(cat(X), cat(Y)) + act_weight * actcost(X)
-#
-# repcost is the representational burden of modelling Y from X's vantage; it
-# grows with category distance and is CONVEX (super-additive), so modelling a
-# being twice as far costs more than twice as much. actcost is set by the
-# helper's own capability (a resource-rich agent intervenes cheaply). The two
-# features that break the metric are exactly these: actcost(X) makes the cost
-# direction-dependent; convex repcost makes it violate the triangle inequality.
+# --------------------------------------------------------------------------- #
+# Fisher-Rao geometry on the simplex (convention: p -> 2*sqrt(p), radius-2
+# sphere, curvature 1/4, d = 2*arccos(sum sqrt(p q)), max distance pi).
+# --------------------------------------------------------------------------- #
 
-# category coordinates on a line; B sits between A and C
-_CAT = {"A": 0.0, "B": 1.0, "C": 2.0}
-# per-agent action cost (capability): A is resource-rich, C resource-poor
-_ACTCOST = {"A": 0.2, "B": 0.5, "C": 1.0}
-_REP_WEIGHT = 1.0
-_ACT_WEIGHT = 1.0
+def _norm(p):
+    p = np.asarray(p, float)
+    return p / p.sum()
 
 
-def _repcost(cx: float, cy: float) -> float:
-    """Convex (squared) representational cost of modelling cy from cx."""
-    return (cx - cy) ** 2
+def fr_distance(p, q):
+    """Fisher-Rao geodesic distance between two distributions."""
+    p, q = _norm(p), _norm(q)
+    c = np.clip(np.sqrt(p * q).sum(), -1.0, 1.0)
+    return 2.0 * np.arccos(c)
 
 
-def _d_care(x: str, y: str) -> float:
-    return _REP_WEIGHT * _repcost(_CAT[x], _CAT[y]) + _ACT_WEIGHT * _ACTCOST[x]
+def sphere_point(p):
+    """Unit-sphere embedding u = sqrt(p) (angles here match the radius-2 model)."""
+    return np.sqrt(_norm(p))
 
 
-def care_quasimetric() -> dict:
-    d_ab = _d_care("A", "B")
-    d_ba = _d_care("B", "A")
-    d_bc = _d_care("B", "C")
-    d_ac = _d_care("A", "C")
-    routed = d_ab + d_bc
+def fr_geodesic(p, q, t):
+    """Point a fraction t along the Fisher-Rao geodesic from p to q (slerp)."""
+    u, v = sphere_point(p), sphere_point(q)
+    omega = np.arccos(np.clip(u @ v, -1.0, 1.0))
+    if omega < 1e-12:
+        w = u
+    else:
+        w = (np.sin((1 - t) * omega) * u + np.sin(t * omega) * v) / np.sin(omega)
+    return _norm(w ** 2)
+
+
+def triangle_angle(vertex, a, b):
+    """Interior angle at `vertex` of the geodesic triangle, between the great
+    circles to a and to b (computed on the unit-sphere embedding)."""
+    u, ua, ub = sphere_point(vertex), sphere_point(a), sphere_point(b)
+    ta = ua - (ua @ u) * u
+    tb = ub - (ub @ u) * u
+    ta /= np.linalg.norm(ta)
+    tb /= np.linalg.norm(tb)
+    return np.arccos(np.clip(ta @ tb, -1.0, 1.0))
+
+
+def shannon_entropy(p):
+    p = _norm(p)
+    nz = p[p > 0]
+    return float(-(nz * np.log(nz)).sum())
+
+
+# --------------------------------------------------------------------------- #
+# Gaussian curvature of a 2D metric from its components, by the Brioschi
+# formula with numerical partials. Fed the Fisher metric it must return 1/4;
+# that self-test certifies the routine before it is used on the care metric.
+# Coordinates: (x, y) = (p1, p2), with p3 = 1 - p1 - p2.
+# --------------------------------------------------------------------------- #
+
+def fisher_EFG(x, y):
+    """Fisher-Rao metric components in simplex coordinates (p1, p2)."""
+    p3 = 1.0 - x - y
+    E = 1.0 / x + 1.0 / p3          # g_11
+    F = 1.0 / p3                     # g_12
+    G = 1.0 / y + 1.0 / p3          # g_22
+    return E, F, G
+
+
+def gaussian_curvature(EFG, x, y, h=1e-4):
+    """Brioschi formula for K from a metric callable EFG(x, y) -> (E, F, G)."""
+    def E(a, b): return EFG(a, b)[0]
+    def F(a, b): return EFG(a, b)[1]
+    def G(a, b): return EFG(a, b)[2]
+
+    E0, F0, G0 = EFG(x, y)
+    # first derivatives (central differences)
+    Ex = (E(x + h, y) - E(x - h, y)) / (2 * h)
+    Ey = (E(x, y + h) - E(x, y - h)) / (2 * h)
+    Fx = (F(x + h, y) - F(x - h, y)) / (2 * h)
+    Fy = (F(x, y + h) - F(x, y - h)) / (2 * h)
+    Gx = (G(x + h, y) - G(x - h, y)) / (2 * h)
+    Gy = (G(x, y + h) - G(x, y - h)) / (2 * h)
+    # second derivatives needed by Brioschi
+    Eyy = (E(x, y + h) - 2 * E0 + E(x, y - h)) / h ** 2
+    Gxx = (G(x + h, y) - 2 * G0 + G(x - h, y)) / h ** 2
+    Fxy = (F(x + h, y + h) - F(x + h, y - h)
+           - F(x - h, y + h) + F(x - h, y - h)) / (4 * h ** 2)
+
+    m1 = np.array([
+        [-0.5 * Eyy + Fxy - 0.5 * Gxx, 0.5 * Ex, Fx - 0.5 * Ey],
+        [Fy - 0.5 * Gx,                E0,       F0],
+        [0.5 * Gy,                     F0,       G0],
+    ])
+    m2 = np.array([
+        [0.0,       0.5 * Ey, 0.5 * Gx],
+        [0.5 * Ey,  E0,       F0],
+        [0.5 * Gx,  F0,       G0],
+    ])
+    denom = (E0 * G0 - F0 ** 2) ** 2
+    return float((np.linalg.det(m1) - np.linalg.det(m2)) / denom)
+
+
+# --------------------------------------------------------------------------- #
+# Study A — the manifold, the metric, and the curvature self-test.
+# --------------------------------------------------------------------------- #
+
+def study_manifold():
+    # care-distance is a genuine metric: sample triples, check the triangle
+    # inequality holds (the earlier claim that it could be violated was wrong).
+    pts = [
+        _norm([0.6, 0.3, 0.1]), _norm([0.2, 0.5, 0.3]), _norm([0.1, 0.2, 0.7]),
+        _norm([0.4, 0.4, 0.2]), _norm([0.33, 0.34, 0.33]),
+    ]
+    worst = 0.0
+    for a in pts:
+        for b in pts:
+            for c in pts:
+                slack = fr_distance(a, c) - (fr_distance(a, b) + fr_distance(b, c))
+                worst = max(worst, slack)  # must stay <= 0
+    triangle_ok = worst <= 1e-9
+
+    # curvature self-test: Brioschi on the Fisher metric over the interior grid
+    ks = []
+    for x in np.linspace(0.12, 0.76, 9):
+        for y in np.linspace(0.12, 0.76, 9):
+            if x + y < 0.88:
+                ks.append(gaussian_curvature(fisher_EFG, x, y))
+    ks = np.array(ks)
+    curv_mean = float(ks.mean())
+    curv_max_dev = float(np.abs(ks - 0.25).max())
+
+    # a geodesic is genuinely non-Euclidean: compare its length to the straight
+    # simplex chord's Fisher length for one representative pair.
+    p, q = _norm([0.7, 0.2, 0.1]), _norm([0.1, 0.2, 0.7])
+    geo_len = fr_distance(p, q)
+    ts = np.linspace(0, 1, 2001)
+    chord = np.array([(1 - t) * p + t * q for t in ts])
+    chord_len = 0.0
+    for i in range(len(ts) - 1):
+        chord_len += fr_distance(chord[i], chord[i + 1])
     return {
-        "d_A_to_B": round(d_ab, 6),
-        "d_B_to_A": round(d_ba, 6),
-        "asymmetry_gap": round(abs(d_ba - d_ab), 6),
-        "d_B_to_C": round(d_bc, 6),
-        "d_A_to_C_direct": round(d_ac, 6),
-        "d_A_to_C_routed": round(routed, 6),       # d(A,B)+d(B,C)
-        "triangle_excess": round(d_ac - routed, 6),  # > 0 means inequality fails
-        "triangle_holds": bool(d_ac <= routed + 1e-9),
+        "triangle_inequality_holds": bool(triangle_ok),
+        "max_triangle_slack": float(worst),
+        "curvature_mean": round(curv_mean, 4),
+        "curvature_expected": 0.25,
+        "curvature_max_abs_dev_from_quarter": round(curv_max_dev, 4),
+        "geodesic_length": round(geo_len, 4),
+        "straight_chord_length": round(chord_len, 4),
+        "chord_excess_percent": round(100 * (chord_len - geo_len) / geo_len, 2),
+        "r_curv_mean": round(curv_mean, 2),
     }
 
 
-# ---------------------------------------------------------------------------
-# B. The price of autonomy: viability vs option-entropy on a control problem
-# ---------------------------------------------------------------------------
-# B lives on a viability ladder s in {0,...,N}. State 0 is absorbing death.
-# Each step B makes a move delta in {-1, 0, +1}. The carer A sets the
-# move-distribution p = (p_down, p_stay, p_up). A's objective is B's expected
-# terminal viability s/N. The autonomy constraint is a floor H_min on the
-# per-step Shannon entropy of p (in nats): A may bias B's options but may not
-# collapse them. We solve exactly by backward induction over a discretised menu
-# of distributions (denominator 12, so the floors ln 2 and ln 3 are hit exactly
-# by (6,6,0)/12 and (4,4,4)/12).
+# --------------------------------------------------------------------------- #
+# Study B — routing and Gauss-Bonnet (the honest replacement for the old,
+# impossible, "triangle violation").
+# --------------------------------------------------------------------------- #
 
-_N = 8          # ladder height
-_T = 8          # horizon (steps)
-_S0 = 4         # B starts mid-ladder
-_DENOM = 12     # action-menu resolution
-_DELTAS = (-1, 0, +1)
+def study_routing():
+    A = _norm([0.75, 0.20, 0.05])   # three viability states / positions
+    B = _norm([0.20, 0.60, 0.20])
+    C = _norm([0.05, 0.20, 0.75])
 
+    dAB, dBC, dAC = fr_distance(A, B), fr_distance(B, C), fr_distance(A, C)
+    routed = dAB + dBC
+    gap = routed - dAC                      # >= 0 by the triangle inequality
 
-def _entropy(p) -> float:
-    return -sum(pi * math.log(pi) for pi in p if pi > 0.0)
+    ang_A = triangle_angle(A, B, C)
+    ang_B = triangle_angle(B, A, C)
+    ang_C = triangle_angle(C, A, B)
+    excess = (ang_A + ang_B + ang_C) - np.pi   # = K * area
+    area = excess / 0.25                        # curvature is 1/4
 
-
-def _action_menu():
-    """All move-distributions on a denominator-12 grid, with their entropy."""
-    menu = []
-    for a, b in product(range(_DENOM + 1), repeat=2):
-        c = _DENOM - a - b
-        if c < 0:
-            continue
-        p = (a / _DENOM, b / _DENOM, c / _DENOM)
-        menu.append((p, _entropy(p)))
-    return menu
-
-
-_MENU = _action_menu()
-
-
-def _clip(s: int) -> int:
-    return 0 if s < 0 else (_N if s > _N else s)
-
-
-def _solve_ladder(h_min: float):
-    """Backward induction. Returns (expected terminal viability from S0,
-    optimal per-(t,s) distribution, the binding entropy floor in nats)."""
-    feasible = [(p, h) for (p, h) in _MENU if h >= h_min - 1e-9]
-    # terminal value: normalised viability; state 0 is dead
-    V = [[0.0] * (_N + 1) for _ in range(_T + 1)]
-    for s in range(_N + 1):
-        V[_T][s] = s / _N
-    policy = [[None] * (_N + 1) for _ in range(_T)]
-    for t in range(_T - 1, -1, -1):
-        for s in range(_N + 1):
-            if s == 0:                      # absorbing death
-                V[t][s] = 0.0
-                continue
-            best, best_p = -1.0, None
-            for p, _h in feasible:
-                ev = 0.0
-                for pi, d in zip(p, _DELTAS):
-                    if pi > 0.0:
-                        ev += pi * V[t + 1][_clip(s + d)]
-                if ev > best + 1e-12:
-                    best, best_p = ev, p
-            V[t][s] = best
-            policy[t][s] = best_p
-    return V[0][_S0], policy, h_min
-
-
-def _terminal_distribution(policy):
-    """Propagate the start mass through the optimal policy; exact, no sampling.
-    Returns (terminal distribution over states, death probability)."""
-    dist = [0.0] * (_N + 1)
-    dist[_S0] = 1.0
-    for t in range(_T):
-        nxt = [0.0] * (_N + 1)
-        for s in range(_N + 1):
-            m = dist[s]
-            if m == 0.0:
-                continue
-            if s == 0:
-                nxt[0] += m
-                continue
-            p = policy[t][s]
-            for pi, d in zip(p, _DELTAS):
-                if pi > 0.0:
-                    nxt[_clip(s + d)] += m * pi
-        dist = nxt
-    return dist, dist[0]
-
-
-def price_of_autonomy() -> dict:
-    floors = {
-        "coercion": 0.0,            # may collapse B's options entirely
-        "autonomy": math.log(2),    # at least two live options each step
-        "freedom": math.log(3),     # full option set (uniform): pure random walk
-    }
-    out = {}
-    dists = {}
-    for name, h in floors.items():
-        v, policy, _ = _solve_ladder(h)
-        term, death = _terminal_distribution(policy)
-        out[name] = {
-            "entropy_floor_nats": round(h, 6),
-            "expected_viability": round(v, 6),
-            "death_probability": round(death, 6),
-        }
-        dists[name] = term
-    out["price_of_autonomy"] = round(
-        out["coercion"]["expected_viability"] - out["autonomy"]["expected_viability"], 6
-    )
-    out["price_of_freedom"] = round(
-        out["coercion"]["expected_viability"] - out["freedom"]["expected_viability"], 6
-    )
-    out["_terminal_distributions"] = {k: [round(x, 6) for x in v] for k, v in dists.items()}
-    out["_ladder"] = {"height": _N, "horizon": _T, "start": _S0}
-    # sweep the entropy floor for the figure: viability falls as B keeps options
-    sweep = []
-    steps = 40
-    for i in range(steps + 1):
-        h = math.log(3) * i / steps
-        v, _, _ = _solve_ladder(h)
-        sweep.append((round(h, 6), round(v, 6)))
-    out["_sweep_floor_viability"] = sweep
-    return out
-
-
-# ---------------------------------------------------------------------------
-# C. Care-curvature: nats of policy deformation per unit viability gain
-# ---------------------------------------------------------------------------
-# A's baseline self-policy helps with probability q. Delivering a viability gain
-# Delta to a target requires raising the help-probability to p = q + Delta/eff,
-# where eff is the per-unit efficacy of A's help toward that target. Efficacy
-# falls with relational curvature: kin are well modelled and cheaply helped,
-# strangers less so. The cost of the shift is KL(Bernoulli(p) || Bernoulli(q))
-# in nats; kappa divides it by the gain delivered.
-
-_Q_BASELINE = 0.1     # baseline help-probability of the self-policy
-_DELTA = 0.2          # fixed viability gain to deliver
-_RELATIONS = {        # relational efficacy (viability gain per unit help-prob)
-    "kin": 1.0,
-    "stranger": 0.5,
-    "distant_stranger": 0.25,
-}
-
-
-def _bernoulli_kl(p: float, q: float) -> float:
-    def term(a, b):
-        return a * math.log(a / b) if a > 0 else 0.0
-    return term(p, q) + term(1 - p, 1 - q)
-
-
-def _kappa(eff: float, delta: float = _DELTA, q: float = _Q_BASELINE):
-    p = q + delta / eff
-    if p > 1.0:                      # cannot be reached by a single agent's act
-        return None, p
-    return _bernoulli_kl(p, q) / delta, p
-
-
-def care_curvature() -> dict:
-    out = {"baseline_help_prob": _Q_BASELINE, "viability_gain": _DELTA}
-    rel = {}
-    for name, eff in _RELATIONS.items():
-        k, p = _kappa(eff)
-        rel[name] = {
-            "efficacy": eff,
-            "required_help_prob": round(p, 6),
-            "kappa_nats_per_unit": None if k is None else round(k, 6),
-        }
-    out["relations"] = rel
-    k_kin = rel["kin"]["kappa_nats_per_unit"]
-    k_str = rel["stranger"]["kappa_nats_per_unit"]
-    k_dist = rel["distant_stranger"]["kappa_nats_per_unit"]
-    out["stranger_over_kin"] = round(k_str / k_kin, 6)
-    out["distant_over_kin"] = round(k_dist / k_kin, 6)
-    # a continuous sweep of efficacy for the figure
-    sweep = []
-    e = 0.18
-    while e <= 1.01:
-        k, p = _kappa(e)
-        if k is not None:
-            sweep.append((round(e, 4), round(k, 6)))
-        e += 0.01
-    out["_sweep_eff_kappa"] = sweep
-    return out
-
-
-# ---------------------------------------------------------------------------
-
-def run() -> dict:
     return {
-        "quasimetric": care_quasimetric(),
-        "autonomy": price_of_autonomy(),
-        "curvature": care_curvature(),
+        "d_A_to_B": round(dAB, 4),
+        "d_B_to_C": round(dBC, 4),
+        "d_A_to_C_direct": round(dAC, 4),
+        "d_A_to_C_routed": round(routed, 4),
+        "routing_gap": round(gap, 4),
+        "triangle_inequality_holds": bool(gap >= -1e-9),
+        "angle_sum": round(ang_A + ang_B + ang_C, 4),
+        "spherical_excess": round(excess, 4),
+        "triangle_area": round(area, 4),
+        "r_excess": round(excess, 2),
+        "r_gap": round(gap, 2),
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Study C — directed care: the carer's control metric g_A = f_A * g_Fisher.
+# --------------------------------------------------------------------------- #
+
+def _weighted_path_length(p, q, f, n=2000):
+    """Length of the Fisher geodesic p->q measured under the conformal metric
+    g = f * g_Fisher, i.e. integral of sqrt(f) ds along the geodesic. f(point)
+    is the carer's per-length control cost (illegibility). For constant f this
+    is exactly sqrt(f) * d_FR."""
+    ts = np.linspace(0, 1, n + 1)
+    ptsg = [fr_geodesic(p, q, t) for t in ts]
+    total = 0.0
+    for i in range(n):
+        ds = fr_distance(ptsg[i], ptsg[i + 1])
+        fmid = 0.5 * (f(ptsg[i]) + f(ptsg[i + 1]))
+        total += np.sqrt(fmid) * ds
+    return total
+
+
+def study_directed():
+    start = _norm([0.70, 0.22, 0.08])    # target in distress (low flourishing)
+    goal = _norm([0.08, 0.22, 0.70])     # target restored to viability
+    base = fr_distance(start, goal)
+
+    # (i) directedness: two carers with different legibility fields pay
+    # different costs to traverse the SAME geodesic. Carer A reads distress
+    # well (low cost near the failing corner); carer D does not.
+    def f_A(p):  # good at reaching a distressed target
+        return 1.0 + 3.0 * p[0]          # cost rises with the target's failing-mass
+    def f_D(p):  # blind to distress
+        return 1.0 + 12.0 * p[0]
+    cost_A = _weighted_path_length(start, goal, f_A)
+    cost_D = _weighted_path_length(start, goal, f_D)
+
+    # (ii) the kin gradient: legibility l in (0,1], control cost f = 1/l^2, so
+    # the care-cost is d_FR / l. Kin are transparent (l=1); distance dims them.
+    relations = {}
+    for name, l in [("kin", 1.0), ("friend", 0.6),
+                    ("stranger", 0.4), ("distant_stranger", 0.2)]:
+        cost = _weighted_path_length(start, goal, lambda p, l=l: 1.0 / l ** 2)
+        relations[name] = {"legibility": l, "care_cost": round(cost, 4)}
+    ratio = (relations["distant_stranger"]["care_cost"]
+             / relations["kin"]["care_cost"])
+
+    # (iii) curvature of the care metric is no longer constant. With a
+    # legibility field that dims toward the failing corner, g_A = f * g_Fisher
+    # has curvature that departs from 1/4; report the field.
+    def f_field(x, y):
+        return 1.0 + 6.0 * x              # x is the failing-state mass
+    def care_EFG(x, y):
+        E, F, G = fisher_EFG(x, y)
+        f = f_field(x, y)
+        return f * E, f * F, f * G
+    ks = []
+    for x in np.linspace(0.12, 0.76, 9):
+        for y in np.linspace(0.12, 0.76, 9):
+            if x + y < 0.88:
+                ks.append(gaussian_curvature(care_EFG, x, y))
+    ks = np.array(ks)
+
+    return {
+        "geodesic_length_fisher": round(base, 4),
+        "directed": {
+            "cost_reader_A": round(cost_A, 4),
+            "cost_blind_D": round(cost_D, 4),
+            "asymmetry_ratio": round(cost_D / cost_A, 4),
+        },
+        "relations": relations,
+        "distant_over_kin": round(ratio, 4),
+        "care_curvature_min": round(float(ks.min()), 4),
+        "care_curvature_max": round(float(ks.max()), 4),
+        "care_curvature_is_variable": bool(ks.max() - ks.min() > 1e-3),
+        "r_distant_over_kin": round(ratio, 2),
+        "r_asym": round(cost_D / cost_A, 2),
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Study D — the price of autonomy: entropy-floored viability on the 3-simplex.
+# --------------------------------------------------------------------------- #
+
+def _gibbs(w, tau):
+    """Exponential-family tilt p_i ~ exp(w_i / tau): the max-viability
+    distribution at fixed entropy, a point on the e-geodesic from uniform."""
+    z = np.exp(np.asarray(w, float) / tau)
+    return z / z.sum()
+
+
+def study_autonomy():
+    w = np.array([0.0, 0.5, 1.0])         # viability of failing/coping/flourishing
+    uniform = _norm([1, 1, 1])
+
+    # coercion: drive the target to the flourishing vertex. Maximal viability,
+    # zero entropy, a single norm.
+    coercion = np.array([0.0, 0.0, 1.0])
+    v_coercion = float(w @ coercion)
+
+    # sweep the entropy floor. At each floor the viability-maximising feasible
+    # distribution is the Gibbs tilt whose entropy equals the floor (entropy
+    # decreases monotonically as tau falls), found by bisection on tau.
+    def v_at_floor(h_floor):
+        lo, hi = 1e-3, 50.0               # tau: small=coercive, large=uniform
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            if shannon_entropy(_gibbs(w, mid)) < h_floor:
+                lo = mid
+            else:
+                hi = mid
+        p = _gibbs(w, 0.5 * (lo + hi))
+        return float(w @ p), p
+
+    floor_2opt = np.log(2)                # "keep at least two live options"
+    v_auto, p_auto = v_at_floor(floor_2opt)
+    price = v_coercion - v_auto
+
+    v_abandon = float(w @ uniform)        # no guidance: uniform, maximal entropy
+    death_abandon = float(uniform[0])     # mass on the failing state
+
+    # geometry: coercion drives the target a finite Fisher distance to a
+    # boundary vertex where the metric degenerates; autonomy-preserving care
+    # stops in the interior.
+    d_to_vertex = fr_distance(uniform, coercion)
+    d_to_auto = fr_distance(uniform, p_auto)
+
+    curve = []
+    for h in np.linspace(0.02, np.log(3) - 1e-6, 25):
+        v, _ = v_at_floor(h)
+        curve.append((round(float(h), 4), round(v, 4)))
+
+    return {
+        "viability_coercion": round(v_coercion, 4),
+        "entropy_coercion": 0.0,
+        "viability_autonomy_floor": round(v_auto, 4),
+        "autonomy_floor_nats": round(float(floor_2opt), 4),
+        "autonomy_distribution": [round(float(x), 4) for x in p_auto],
+        "price_of_autonomy": round(price, 4),
+        "viability_abandonment": round(v_abandon, 4),
+        "death_prob_abandonment": round(death_abandon, 4),
+        "fr_distance_uniform_to_vertex": round(d_to_vertex, 4),
+        "fr_distance_uniform_to_autonomy": round(d_to_auto, 4),
+        "viability_vs_entropy": curve,
+        "r_price": round(price, 3),
+        "r_v_auto": round(v_auto, 3),
+        "r_v_abandon": round(v_abandon, 3),
+    }
+
+
+def run():
+    return {
+        "manifold": study_manifold(),
+        "routing": study_routing(),
+        "directed": study_directed(),
+        "autonomy": study_autonomy(),
     }
 
 

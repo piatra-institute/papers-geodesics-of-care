@@ -1,8 +1,9 @@
 [project]
 name = "geodesics-of-care-sim"
 version = "0.1.0"
-description = "Exact care-MDP analyses for Geodesics of Care: the quasi-metric, the price of autonomy, and care-curvature"
+description = "Exact information-geometry studies for Geodesics of Care: the Fisher-Rao manifold self-test, Gauss-Bonnet routing, directed care, and the price of autonomy"
 requires-python = ">=3.10"
 dependencies = [
+    "numpy>=1.26",
     "matplotlib>=3.8",
 ]
