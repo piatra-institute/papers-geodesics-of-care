@@ -1,5 +1,10 @@
 # Research
 
+September 2026 note: the findings below belong to earlier manuscripts. Their
+section references and assertions of completed tracing are historical, not a
+verification of the current revision. Current inspection limits and decisions
+are in source-checks.md; paper/references.json is the current bibliography.
+
 Findings, tiered by source proximity. See the workspace docs (`papers docs`): research-pipeline.md §2. T1 primary · T2 authoritative secondary · T3 reference · T4 general web (leads only). A claim that reaches the paper rests on a T1 or T2 source.
 
 Origin: three seed chats in `chats/` (one ChatGPT ideation, one ChatGPT Pro deep research, one Gemini deep research), which proposed "Geodesics of Care" and the viability-coupling reading. The chats are leads only; every claim below was traced to a primary or authoritative source and frozen in `sources.md`.

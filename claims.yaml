@@ -1,0 +1,714 @@
+{
+  "schema": 1,
+  "coverage": "reviewed",
+  "reviewed_manuscript_sha256": "fa27f6e678831cb79770ff762d1fb7829df9e1b4ae3065802f35050d031ba821",
+  "claims": [
+    {
+      "id": "abstract-floor-cost",
+      "kind": "computation",
+      "passage": "A system may improve its forecast of someone's welfare while losing sight of what that person wants. This paper uses a small geometric model to distinguish three questions: how a represented condition changes, what an intervention costs, and who may authorize it. A prognosis over failing, coping and flourishing is placed on a probability simplex with the Fisher-Rao metric. Statistical invariance motivates this metric; it does not make it compulsory for care. Worked calculations show how a conformal effort field changes path costs and curvature, while a flat counterexample shows why a costly detour says nothing by itself about delegating responsibility. The main ethical distinction appears when outcome entropy is compared with recipient permission. A freely chosen predictable outcome can have zero entropy; an imposed lottery can have high entropy. An entropy floor therefore constrains uncertainty, not autonomy. With assigned utility weights, its calculated cost is 0.1521; changing the weights can remove that cost entirely. A separate permission rule lets the recipient refuse, revoke or change a target, including when the new target scores worse for the controller. These are deterministic illustrations and implementation checks, not observations of caring practice. Their value is to make the model's commitments inspectable without allowing a welfare score to speak for its recipient.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/entropy/utility_cost_of_floor",
+        "reported": "0.1521",
+        "scale": 1,
+        "units": "assigned utility",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "fisher-arc",
+      "kind": "computation",
+      "passage": "For $p=(0.7,0.2,0.1)$ and $q=(0.1,0.2,0.7)$, the Fisher arc has length $1.5074$. Linear interpolation in probability coordinates, measured with the same metric using $2{,}000$ segments, has length $1.5171$. This verifies a small geometric distinction: straight in a chart need not mean shortest in its metric.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/manifold/geodesic_length",
+        "reported": "1.5074",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "coordinate-path",
+      "kind": "computation",
+      "passage": "For $p=(0.7,0.2,0.1)$ and $q=(0.1,0.2,0.7)$, the Fisher arc has length $1.5074$. Linear interpolation in probability coordinates, measured with the same metric using $2{,}000$ segments, has length $1.5171$. This verifies a small geometric distinction: straight in a chart need not mean shortest in its metric.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/manifold/straight_coordinate_path_length",
+        "reported": "1.5171",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "base-curvature-error",
+      "kind": "computation",
+      "passage": "The code also estimates curvature from the metric components using central finite differences and the Brioschi formula. On the declared interior grid, at difference step $10^{-4}$, the largest absolute error from $1/4$ is about $6.01\\times10^{-6}$. This is a numerical consistency check, not machine-precision recovery or validation of the care interpretation. Step-size sensitivity and an independent conformal-curvature formula provide further checks.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/manifold/curvature_max_abs_error",
+        "reported": "6.01\\times10^{-6}",
+        "scale": 1,
+        "units": "absolute curvature error",
+        "conditions": "Central differences, h=1e-4; x,y on nine values .12 to .76, x+y<.88; max absolute error from .25.",
+        "significant_digits": 3
+      }
+    },
+    {
+      "id": "routed-length",
+      "kind": "computation",
+      "passage": "Take three distributions,\n$$\np=(0.75,0.20,0.05),\\quad\nq=(0.20,0.60,0.20),\\quad\nr=(0.05,0.20,0.75).\n$$\nThe route through $q$ has length $2.3400$, compared with $1.8862$ for the direct Fisher arc from $p$ to $r$. The gap is $0.4539$. The geodesic triangle's angles sum to $3.3164$ radians, with spherical excess $0.1748$ and area $0.6994$. Computing the area independently from the spherical solid angle agrees with the Gauss-Bonnet relation\n$$\n\\theta_p+\\theta_q+\\theta_r-\\pi=\\frac14\\,\\operatorname{Area}.\n$$",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/routing/routed_length",
+        "reported": "2.3400",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "direct-length",
+      "kind": "computation",
+      "passage": "Take three distributions,\n$$\np=(0.75,0.20,0.05),\\quad\nq=(0.20,0.60,0.20),\\quad\nr=(0.05,0.20,0.75).\n$$\nThe route through $q$ has length $2.3400$, compared with $1.8862$ for the direct Fisher arc from $p$ to $r$. The gap is $0.4539$. The geodesic triangle's angles sum to $3.3164$ radians, with spherical excess $0.1748$ and area $0.6994$. Computing the area independently from the spherical solid angle agrees with the Gauss-Bonnet relation\n$$\n\\theta_p+\\theta_q+\\theta_r-\\pi=\\frac14\\,\\operatorname{Area}.\n$$",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/routing/d_pr",
+        "reported": "1.8862",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "detour-gap",
+      "kind": "computation",
+      "passage": "Take three distributions,\n$$\np=(0.75,0.20,0.05),\\quad\nq=(0.20,0.60,0.20),\\quad\nr=(0.05,0.20,0.75).\n$$\nThe route through $q$ has length $2.3400$, compared with $1.8862$ for the direct Fisher arc from $p$ to $r$. The gap is $0.4539$. The geodesic triangle's angles sum to $3.3164$ radians, with spherical excess $0.1748$ and area $0.6994$. Computing the area independently from the spherical solid angle agrees with the Gauss-Bonnet relation\n$$\n\\theta_p+\\theta_q+\\theta_r-\\pi=\\frac14\\,\\operatorname{Area}.\n$$",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/routing/routing_gap",
+        "reported": "0.4539",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "angle-sum",
+      "kind": "computation",
+      "passage": "Take three distributions,\n$$\np=(0.75,0.20,0.05),\\quad\nq=(0.20,0.60,0.20),\\quad\nr=(0.05,0.20,0.75).\n$$\nThe route through $q$ has length $2.3400$, compared with $1.8862$ for the direct Fisher arc from $p$ to $r$. The gap is $0.4539$. The geodesic triangle's angles sum to $3.3164$ radians, with spherical excess $0.1748$ and area $0.6994$. Computing the area independently from the spherical solid angle agrees with the Gauss-Bonnet relation\n$$\n\\theta_p+\\theta_q+\\theta_r-\\pi=\\frac14\\,\\operatorname{Area}.\n$$",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/routing/angle_sum",
+        "reported": "3.3164",
+        "scale": 1,
+        "units": "radians",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "angle-excess",
+      "kind": "computation",
+      "passage": "Take three distributions,\n$$\np=(0.75,0.20,0.05),\\quad\nq=(0.20,0.60,0.20),\\quad\nr=(0.05,0.20,0.75).\n$$\nThe route through $q$ has length $2.3400$, compared with $1.8862$ for the direct Fisher arc from $p$ to $r$. The gap is $0.4539$. The geodesic triangle's angles sum to $3.3164$ radians, with spherical excess $0.1748$ and area $0.6994$. Computing the area independently from the spherical solid angle agrees with the Gauss-Bonnet relation\n$$\n\\theta_p+\\theta_q+\\theta_r-\\pi=\\frac14\\,\\operatorname{Area}.\n$$",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/routing/spherical_excess",
+        "reported": "0.1748",
+        "scale": 1,
+        "units": "radians",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "triangle-area",
+      "kind": "computation",
+      "passage": "Take three distributions,\n$$\np=(0.75,0.20,0.05),\\quad\nq=(0.20,0.60,0.20),\\quad\nr=(0.05,0.20,0.75).\n$$\nThe route through $q$ has length $2.3400$, compared with $1.8862$ for the direct Fisher arc from $p$ to $r$. The gap is $0.4539$. The geodesic triangle's angles sum to $3.3164$ radians, with spherical excess $0.1748$ and area $0.6994$. Computing the area independently from the spherical solid angle agrees with the Gauss-Bonnet relation\n$$\n\\theta_p+\\theta_q+\\theta_r-\\pi=\\frac14\\,\\operatorname{Area}.\n$$",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/routing/triangle_area",
+        "reported": "0.6994",
+        "scale": 1,
+        "units": "radius-2 spherical area",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "base-effort-distance",
+      "kind": "computation",
+      "passage": "On the path from $(0.70,0.22,0.08)$ to $(0.08,0.22,0.70)$, the base distance is $1.6095$. Assigning $\\ell=1,0.6,0.4,0.2$ gives costs $1.6095,2.6825,4.0238,8.0476$. The final cost is five times the first because the efficiencies were chosen in that ratio. Calling the endpoints of this parameter list “kin” and “distant stranger” would add an empirical claim for which the calculation supplies no evidence.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/base_distance",
+        "reported": "1.6095",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "constant-effort-0",
+      "kind": "computation",
+      "passage": "On the path from $(0.70,0.22,0.08)$ to $(0.08,0.22,0.70)$, the base distance is $1.6095$. Assigning $\\ell=1,0.6,0.4,0.2$ gives costs $1.6095,2.6825,4.0238,8.0476$. The final cost is five times the first because the efficiencies were chosen in that ratio. Calling the endpoints of this parameter list “kin” and “distant stranger” would add an empirical claim for which the calculation supplies no evidence.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/constant_factors/0/path_length",
+        "reported": "1.6095",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "constant-effort-1",
+      "kind": "computation",
+      "passage": "On the path from $(0.70,0.22,0.08)$ to $(0.08,0.22,0.70)$, the base distance is $1.6095$. Assigning $\\ell=1,0.6,0.4,0.2$ gives costs $1.6095,2.6825,4.0238,8.0476$. The final cost is five times the first because the efficiencies were chosen in that ratio. Calling the endpoints of this parameter list “kin” and “distant stranger” would add an empirical claim for which the calculation supplies no evidence.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/constant_factors/1/path_length",
+        "reported": "2.6825",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "constant-effort-2",
+      "kind": "computation",
+      "passage": "On the path from $(0.70,0.22,0.08)$ to $(0.08,0.22,0.70)$, the base distance is $1.6095$. Assigning $\\ell=1,0.6,0.4,0.2$ gives costs $1.6095,2.6825,4.0238,8.0476$. The final cost is five times the first because the efficiencies were chosen in that ratio. Calling the endpoints of this parameter list “kin” and “distant stranger” would add an empirical claim for which the calculation supplies no evidence.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/constant_factors/2/path_length",
+        "reported": "4.0238",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "constant-effort-3",
+      "kind": "computation",
+      "passage": "On the path from $(0.70,0.22,0.08)$ to $(0.08,0.22,0.70)$, the base distance is $1.6095$. Assigning $\\ell=1,0.6,0.4,0.2$ gives costs $1.6095,2.6825,4.0238,8.0476$. The final cost is five times the first because the efficiencies were chosen in that ratio. Calling the endpoints of this parameter list “kin” and “distant stranger” would add an empirical claim for which the calculation supplies no evidence.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/constant_factors/3/path_length",
+        "reported": "8.0476",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "variable-effort-3",
+      "kind": "computation",
+      "passage": "For the variable field $f_A(p)=1+\\alpha p_1$, the same Fisher arc costs $2.3283$ at $\\alpha=3$ and $3.6972$ at $\\alpha=12$. These are lengths of a fixed path under two different metrics. With variable $f_A$, that path need not minimize effort. Each metric remains symmetric: reversing the path gives the same cost. Different agents may have different fields without making either field direction-dependent.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/variable_fields/0/path_length",
+        "reported": "2.3283",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "variable-effort-12",
+      "kind": "computation",
+      "passage": "For the variable field $f_A(p)=1+\\alpha p_1$, the same Fisher arc costs $2.3283$ at $\\alpha=3$ and $3.6972$ at $\\alpha=12$. These are lengths of a fixed path under two different metrics. With variable $f_A$, that path need not minimize effort. Each metric remains symmetric: reversing the path gives the same cost. Different agents may have different fields without making either field direction-dependent.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/variable_fields/1/path_length",
+        "reported": "3.6972",
+        "scale": 1,
+        "units": "Fisher-Rao length",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "effort-curvature-min",
+      "kind": "computation",
+      "passage": "The curvature of the effort metric also changes. For $f=1+6p_1$, numerical values on the sampled grid range from $0.1395$ to $0.2601$. The independent formula\n$$\nK_{f g_F}=\\frac{1}{f}\\left(\\frac14-\\frac12\\Delta_F\\log f\\right)\n$$\nuses $\\Delta_Fp_1=(1-3p_1)/2$ and\n$\\lVert\\nabla_Fp_1\\rVert^2=p_1(1-p_1)$. Its maximum absolute disagreement with the finite-difference estimates is about $2.68\\times10^{-6}$. Here curvature describes the chosen field. It has not been measured in a family, hospital or institution.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/curvature_min",
+        "reported": "0.1395",
+        "scale": 1,
+        "units": "Gaussian curvature",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "effort-curvature-max",
+      "kind": "computation",
+      "passage": "The curvature of the effort metric also changes. For $f=1+6p_1$, numerical values on the sampled grid range from $0.1395$ to $0.2601$. The independent formula\n$$\nK_{f g_F}=\\frac{1}{f}\\left(\\frac14-\\frac12\\Delta_F\\log f\\right)\n$$\nuses $\\Delta_Fp_1=(1-3p_1)/2$ and\n$\\lVert\\nabla_Fp_1\\rVert^2=p_1(1-p_1)$. Its maximum absolute disagreement with the finite-difference estimates is about $2.68\\times10^{-6}$. Here curvature describes the chosen field. It has not been measured in a family, hospital or institution.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/curvature_max",
+        "reported": "0.2601",
+        "scale": 1,
+        "units": "Gaussian curvature",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "effort-curvature-error",
+      "kind": "computation",
+      "passage": "The curvature of the effort metric also changes. For $f=1+6p_1$, numerical values on the sampled grid range from $0.1395$ to $0.2601$. The independent formula\n$$\nK_{f g_F}=\\frac{1}{f}\\left(\\frac14-\\frac12\\Delta_F\\log f\\right)\n$$\nuses $\\Delta_Fp_1=(1-3p_1)/2$ and\n$\\lVert\\nabla_Fp_1\\rVert^2=p_1(1-p_1)$. Its maximum absolute disagreement with the finite-difference estimates is about $2.68\\times10^{-6}$. Here curvature describes the chosen field. It has not been measured in a family, hospital or institution.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/effort/curvature_max_abs_error",
+        "reported": "2.68\\times10^{-6}",
+        "scale": 1,
+        "units": "absolute curvature error",
+        "conditions": "f=1+6*p1; same declared interior grid, finite differences h=1e-4 versus independently derived analytic curvature.",
+        "significant_digits": 3
+      }
+    },
+    {
+      "id": "floor-coordinate-0",
+      "kind": "computation",
+      "passage": "At $h=\\ln2$, the resulting distribution is approximately\n$(0.0528,0.1987,0.7485)$, with expected utility $0.8479$. The loss against the maximum score is $0.1521$. Uniform probability gives utility $0.5$ and maximum entropy $\\ln3$. These values follow from the assigned weights. If instead the score is the probability of coping *or* flourishing, with weights $(0,1,1)$, then $(0,0.5,0.5)$ meets the same entropy floor while retaining maximum utility $1$. The cost of the floor is then zero.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/entropy/floor_distribution/0",
+        "reported": "0.0528",
+        "scale": 1,
+        "units": "probability",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "floor-coordinate-1",
+      "kind": "computation",
+      "passage": "At $h=\\ln2$, the resulting distribution is approximately\n$(0.0528,0.1987,0.7485)$, with expected utility $0.8479$. The loss against the maximum score is $0.1521$. Uniform probability gives utility $0.5$ and maximum entropy $\\ln3$. These values follow from the assigned weights. If instead the score is the probability of coping *or* flourishing, with weights $(0,1,1)$, then $(0,0.5,0.5)$ meets the same entropy floor while retaining maximum utility $1$. The cost of the floor is then zero.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/entropy/floor_distribution/1",
+        "reported": "0.1987",
+        "scale": 1,
+        "units": "probability",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "floor-coordinate-2",
+      "kind": "computation",
+      "passage": "At $h=\\ln2$, the resulting distribution is approximately\n$(0.0528,0.1987,0.7485)$, with expected utility $0.8479$. The loss against the maximum score is $0.1521$. Uniform probability gives utility $0.5$ and maximum entropy $\\ln3$. These values follow from the assigned weights. If instead the score is the probability of coping *or* flourishing, with weights $(0,1,1)$, then $(0,0.5,0.5)$ meets the same entropy floor while retaining maximum utility $1$. The cost of the floor is then zero.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/entropy/floor_distribution/2",
+        "reported": "0.7485",
+        "scale": 1,
+        "units": "probability",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "floor-score",
+      "kind": "computation",
+      "passage": "At $h=\\ln2$, the resulting distribution is approximately\n$(0.0528,0.1987,0.7485)$, with expected utility $0.8479$. The loss against the maximum score is $0.1521$. Uniform probability gives utility $0.5$ and maximum entropy $\\ln3$. These values follow from the assigned weights. If instead the score is the probability of coping *or* flourishing, with weights $(0,1,1)$, then $(0,0.5,0.5)$ meets the same entropy floor while retaining maximum utility $1$. The cost of the floor is then zero.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/entropy/floor_utility",
+        "reported": "0.8479",
+        "scale": 1,
+        "units": "assigned utility",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "floor-cost",
+      "kind": "computation",
+      "passage": "At $h=\\ln2$, the resulting distribution is approximately\n$(0.0528,0.1987,0.7485)$, with expected utility $0.8479$. The loss against the maximum score is $0.1521$. Uniform probability gives utility $0.5$ and maximum entropy $\\ln3$. These values follow from the assigned weights. If instead the score is the probability of coping *or* flourishing, with weights $(0,1,1)$, then $(0,0.5,0.5)$ meets the same entropy floor while retaining maximum utility $1$. The cost of the floor is then zero.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/entropy/utility_cost_of_floor",
+        "reported": "0.1521",
+        "scale": 1,
+        "units": "assigned utility",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 4
+      }
+    },
+    {
+      "id": "uniform-score",
+      "kind": "computation",
+      "passage": "At $h=\\ln2$, the resulting distribution is approximately\n$(0.0528,0.1987,0.7485)$, with expected utility $0.8479$. The loss against the maximum score is $0.1521$. Uniform probability gives utility $0.5$ and maximum entropy $\\ln3$. These values follow from the assigned weights. If instead the score is the probability of coping *or* flourishing, with weights $(0,1,1)$, then $(0,0.5,0.5)$ meets the same entropy floor while retaining maximum utility $1$. The cost of the floor is then zero.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/entropy/uniform_utility",
+        "reported": "0.5",
+        "scale": 1,
+        "units": "assigned utility",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 1
+      }
+    },
+    {
+      "id": "alternative-score",
+      "kind": "computation",
+      "passage": "At $h=\\ln2$, the resulting distribution is approximately\n$(0.0528,0.1987,0.7485)$, with expected utility $0.8479$. The loss against the maximum score is $0.1521$. Uniform probability gives utility $0.5$ and maximum entropy $\\ln3$. These values follow from the assigned weights. If instead the score is the probability of coping *or* flourishing, with weights $(0,1,1)$, then $(0,0.5,0.5)$ meets the same entropy floor while retaining maximum utility $1$. The cost of the floor is then zero.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/entropy/alternative_score/utility",
+        "reported": "1",
+        "scale": 1,
+        "units": "assigned utility",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 0
+      }
+    },
+    {
+      "id": "permission-cap",
+      "kind": "computation",
+      "passage": "In the revocation trace, two permitted steps of fraction $0.25$ occur before revocation; the remaining three proposals produce zero applied actions. When the recipient instead approves $(0,0.9,0.1)$, the rule accepts it even though its assigned utility is $0.55$, below the controller's maximum. Her instruction changes what may be done; it is not merely another observation used to predict what the controller already intends.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/permission/revocation_trace/0/fraction",
+        "reported": "0.25",
+        "scale": 1,
+        "units": "fraction of remaining Fisher arc",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 2
+      }
+    },
+    {
+      "id": "changed-goal-score",
+      "kind": "computation",
+      "passage": "In the revocation trace, two permitted steps of fraction $0.25$ occur before revocation; the remaining three proposals produce zero applied actions. When the recipient instead approves $(0,0.9,0.1)$, the rule accepts it even though its assigned utility is $0.55$, below the controller's maximum. Her instruction changes what may be done; it is not merely another observation used to predict what the controller already intends.",
+      "evidence": {
+        "file": "simulation/output/results.json",
+        "run_id": "model-checks",
+        "pointer": "/permission/changed_goal/assigned_utility",
+        "reported": "0.55",
+        "scale": 1,
+        "units": "assigned utility",
+        "conditions": "Deterministic illustration with declared distributions and assigned parameters; no empirical validation.",
+        "decimals": 2
+      }
+    },
+    {
+      "id": "forecast-and-authority",
+      "kind": "interpretation",
+      "passage": "The difficulty survives perfect prediction. A person might knowingly choose an exhausting visit over a quiet afternoon. The device could correctly predict the cost and still be wrong to prevent the visit. Conversely, a device that leaves every outcome uncertain has not thereby left its user free. Perhaps she has no say in the matter at all.",
+      "rationale": "The hypothetical visit distinguishes predicted burden from permission. This is a conceptual counterexample, not an observed outcome."
+    },
+    {
+      "id": "layered-terms",
+      "kind": "definition",
+      "passage": "I will call the weaker relation *functional coupling*: information about a recipient changes a system's action. In a practical helping relation, those actions are directed toward improving or sustaining the recipient's condition. Ethical care introduces questions about standing, need, permission and the recipient's response. These distinctions leave room for a machine to assist in care without settling whether it feels anything. They also prevent a tracking system directed toward harm from qualifying as helpful merely because it has an accurate model.",
+      "rationale": "Functional coupling, practically helping and ethical care are this essay's working distinctions, not findings derived from geometry."
+    },
+    {
+      "id": "coarsened-prognosis",
+      "kind": "assumption",
+      "passage": "Let $p=(p_1,p_2,p_3)$ represent a model's probabilities that the recipient will be failing, coping or flourishing at a specified horizon. These names are placeholders for an assessment that would have to be agreed and validated in an application. They compress many ways of living into three categories. Neither the categories nor their ranking is delivered by probability theory.",
+      "rationale": "The three labels and assessment horizon are chosen. The joint meaning of improvement needs agreement/validation, not a statistical theorem."
+    },
+    {
+      "id": "belief-versus-actuation",
+      "kind": "assumption",
+      "passage": "The model also needs to say what kind of change it represents. Learning that a person was healthier than expected can move $p$ without improving her health. An intervention can improve her condition while the model fails to notice. To interpret a path from $p$ to $q$ as practical help, one would need an action-dependent causal model connecting interventions to outcomes. No such model is estimated here. The paths are stipulated changes in prognosis, used to examine what follows from the representation.",
+      "rationale": "All paths stipulate changes in prognosis. No transition law or action-dependent causal effect has been estimated."
+    },
+    {
+      "id": "fisher-definition",
+      "kind": "definition",
+      "passage": "For positive probabilities summing to one, choose the Fisher metric\n$$\ng_F(v,v)=\\sum_{i=1}^{3}\\frac{v_i^2}{p_i},\n\\qquad \\sum_i v_i=0.\n$$\nThere is a principled statistical reason for this choice. In Chentsov's finite-model characterization, a continuous metric family preserved by congruent Markov embeddings is a constant multiple of the Fisher metric; these embeddings correspond to information-preserving statistical transformations [@ay2015, Proposition 3.19 and its preceding discussion]. The requirement applies across statistical models. It is stronger than changing coordinates on this simplex.",
+      "rationale": "The Fisher metric on normalized positive weights is the declared geometry; tangent vectors have zero coordinate sum."
+    },
+    {
+      "id": "metric-not-welfare",
+      "kind": "interpretation",
+      "passage": "Accepting that invariance requirement selects a statistical geometry. It does not establish that the resulting distance measures suffering, effort or obligation. Costs of action, time and inaccessible transitions may justify additional structure. The conformal fields introduced below are one explicit addition, and their choice needs its own justification.",
+      "rationale": "Statistical invariance alone supplies no welfare valuation or action costs; conditional interpretation follows from the distinct objects being modeled."
+    },
+    {
+      "id": "sphere-isometry",
+      "kind": "definition",
+      "passage": "The geometry itself is easy to see. Set $z_i=2\\sqrt{p_i}$. Then\n$$\n\\sum_i z_i^2=4,\n\\qquad\n\\sum_i dz_i^2=\\sum_i\\frac{dp_i^2}{p_i}.\n$$\nThe simplex interior becomes the positive part of a sphere of radius $2$. Its Gaussian curvature is $1/4$, and the shortest arc has length\n$$\nd_F(p,q)=2\\arccos\\!\\left(\\sum_i\\sqrt{p_iq_i}\\right).\n$$\nThe completed space includes distributions with zero coordinates. Disjoint supports are a finite distance $\\pi$ apart. The divergent coordinate coefficients at a vertex do not make the vertex infinitely distant, still less establish that it is an ethical or medical pathology.",
+      "rationale": "Differentiating z_i=2*sqrt(p_i) gives the displayed metric equality and radius-2 sphere; curvature and distance are deductions with this normalization."
+    },
+    {
+      "id": "boundary-not-pathology",
+      "kind": "interpretation",
+      "passage": "The geometry itself is easy to see. Set $z_i=2\\sqrt{p_i}$. Then\n$$\n\\sum_i z_i^2=4,\n\\qquad\n\\sum_i dz_i^2=\\sum_i\\frac{dp_i^2}{p_i}.\n$$\nThe simplex interior becomes the positive part of a sphere of radius $2$. Its Gaussian curvature is $1/4$, and the shortest arc has length\n$$\nd_F(p,q)=2\\arccos\\!\\left(\\sum_i\\sqrt{p_iq_i}\\right).\n$$\nThe completed space includes distributions with zero coordinates. Disjoint supports are a finite distance $\\pi$ apart. The divergent coordinate coefficients at a vertex do not make the vertex infinitely distant, still less establish that it is an ethical or medical pathology.",
+      "rationale": "The square-root embedding extends to the closed simplex; disjoint supports have distance pi. Entropy/coordinate singularities alone contain no coercion or illness criterion."
+    },
+    {
+      "id": "manifold-inputs",
+      "kind": "assumption",
+      "passage": "For $p=(0.7,0.2,0.1)$ and $q=(0.1,0.2,0.7)$, the Fisher arc has length $1.5074$. Linear interpolation in probability coordinates, measured with the same metric using $2{,}000$ segments, has length $1.5171$. This verifies a small geometric distinction: straight in a chart need not mean shortest in its metric.",
+      "rationale": "Distributions are assigned; straight-coordinate path length uses 2,000 segments stored at /manifold/path_segments. This is a numerical quadrature, not exact equality to a continuum integral."
+    },
+    {
+      "id": "finite-difference-method",
+      "kind": "definition",
+      "passage": "The code also estimates curvature from the metric components using central finite differences and the Brioschi formula. On the declared interior grid, at difference step $10^{-4}$, the largest absolute error from $1/4$ is about $6.01\\times10^{-6}$. This is a numerical consistency check, not machine-precision recovery or validation of the care interpretation. Step-size sensitivity and an independent conformal-curvature formula provide further checks.",
+      "rationale": "analyses.py gaussian_curvature implements Brioschi with central differences. The sensitivity runs at 1e-3,3e-4,1e-4 are retained at /manifold/curvature_step_sensitivity."
+    },
+    {
+      "id": "routing-inputs",
+      "kind": "assumption",
+      "passage": "Take three distributions,\n$$\np=(0.75,0.20,0.05),\\quad\nq=(0.20,0.60,0.20),\\quad\nr=(0.05,0.20,0.75).\n$$\nThe route through $q$ has length $2.3400$, compared with $1.8862$ for the direct Fisher arc from $p$ to $r$. The gap is $0.4539$. The geodesic triangle's angles sum to $3.3164$ radians, with spherical excess $0.1748$ and area $0.6994$. Computing the area independently from the spherical solid angle agrees with the Gauss-Bonnet relation\n$$\n\\theta_p+\\theta_q+\\theta_r-\\pi=\\frac14\\,\\operatorname{Area}.\n$$",
+      "rationale": "The three point vectors are stipulated and retained in /routing/points; they are not distinct people."
+    },
+    {
+      "id": "independent-gauss-bonnet",
+      "kind": "definition",
+      "passage": "Take three distributions,\n$$\np=(0.75,0.20,0.05),\\quad\nq=(0.20,0.60,0.20),\\quad\nr=(0.05,0.20,0.75).\n$$\nThe route through $q$ has length $2.3400$, compared with $1.8862$ for the direct Fisher arc from $p$ to $r$. The gap is $0.4539$. The geodesic triangle's angles sum to $3.3164$ radians, with spherical excess $0.1748$ and area $0.6994$. Computing the area independently from the spherical solid angle agrees with the Gauss-Bonnet relation\n$$\n\\theta_p+\\theta_q+\\theta_r-\\pi=\\frac14\\,\\operatorname{Area}.\n$$",
+      "rationale": "spherical_triangle_area uses an independent determinant/solid-angle formula. /routing/gauss_bonnet_abs_residual is below 1e-12; no ethical inference follows."
+    },
+    {
+      "id": "flat-counterexample",
+      "kind": "interpretation",
+      "passage": "These are facts about three distributions. They are not three people, and the triangle does not model a mother asking a nurse to help her child. A routing gap does not even require curvature: in the flat plane, the path $(0,0)\\to(1,1)\\to(2,0)$ has length $2\\sqrt2$, whereas the direct distance is $2$. A detour is longer in both examples because it is not a shortest route between its endpoints.",
+      "rationale": "Euclidean lengths give 2*sqrt(2)>2; /routing/flat_counterexample records both and their difference. A detour can cost more in a flat metric."
+    },
+    {
+      "id": "delegation-not-distance",
+      "kind": "interpretation",
+      "passage": "Delegation would need a different description: which agent can perform which action, with what information, resources and responsibility. An intermediary might make an otherwise unavailable action possible or perform it at lower cost. None of those changes contradicts a triangle inequality on a fixed statistical manifold. Curvature cannot decide whether transferring a task discharges an obligation.",
+      "rationale": "Changing the feasible actions or agent costs is not the same operation as taking a detour in a fixed distributional metric."
+    },
+    {
+      "id": "effort-metric",
+      "kind": "definition",
+      "passage": "Effort can nevertheless be represented explicitly. For a carer $A$, assign a positive field $f_A(p)$ and define\n$$\ng_A=f_Ag_F,\n\\qquad\nL_A(\\gamma)=\\int_\\gamma\\sqrt{f_A(p)}\\,ds_F.\n$$\nThe tensor is multiplied by $f_A$; length is multiplied locally by its square root. A constant efficiency parameter $\\ell$ can therefore be represented by $f_A=1/\\ell^2$, giving length $d_F/\\ell$ along a Fisher geodesic.",
+      "rationale": "A positive conformal tensor factor f changes the line element by sqrt(f). This is an assigned cost representation, not measured effort."
+    },
+    {
+      "id": "constant-length-scale",
+      "kind": "definition",
+      "passage": "Effort can nevertheless be represented explicitly. For a carer $A$, assign a positive field $f_A(p)$ and define\n$$\ng_A=f_Ag_F,\n\\qquad\nL_A(\\gamma)=\\int_\\gamma\\sqrt{f_A(p)}\\,ds_F.\n$$\nThe tensor is multiplied by $f_A$; length is multiplied locally by its square root. A constant efficiency parameter $\\ell$ can therefore be represented by $f_A=1/\\ell^2$, giving length $d_F/\\ell$ along a Fisher geodesic.",
+      "rationale": "With f=1/ell^2, every curve length scales by 1/ell. A constant rescaling preserves the base shortest paths."
+    },
+    {
+      "id": "assigned-efficiencies",
+      "kind": "assumption",
+      "passage": "On the path from $(0.70,0.22,0.08)$ to $(0.08,0.22,0.70)$, the base distance is $1.6095$. Assigning $\\ell=1,0.6,0.4,0.2$ gives costs $1.6095,2.6825,4.0238,8.0476$. The final cost is five times the first because the efficiencies were chosen in that ratio. Calling the endpoints of this parameter list “kin” and “distant stranger” would add an empirical claim for which the calculation supplies no evidence.",
+      "rationale": "Efficiencies 1,.6,.4,.2 are chosen; fivefold cost ratio is /effort/lowest_over_highest_efficiency_cost. No kinship mechanism or observations are in the model."
+    },
+    {
+      "id": "fixed-arc-not-optimum",
+      "kind": "interpretation",
+      "passage": "For the variable field $f_A(p)=1+\\alpha p_1$, the same Fisher arc costs $2.3283$ at $\\alpha=3$ and $3.6972$ at $\\alpha=12$. These are lengths of a fixed path under two different metrics. With variable $f_A$, that path need not minimize effort. Each metric remains symmetric: reversing the path gives the same cost. Different agents may have different fields without making either field direction-dependent.",
+      "rationale": "_weighted_path_length prices the same Fisher geodesic by 2,000 midpoint samples. Variable-field optima are not computed. Reverse-cost residuals are zero for both tested fixed metrics."
+    },
+    {
+      "id": "conformal-identity",
+      "kind": "definition",
+      "passage": "The curvature of the effort metric also changes. For $f=1+6p_1$, numerical values on the sampled grid range from $0.1395$ to $0.2601$. The independent formula\n$$\nK_{f g_F}=\\frac{1}{f}\\left(\\frac14-\\frac12\\Delta_F\\log f\\right)\n$$\nuses $\\Delta_Fp_1=(1-3p_1)/2$ and\n$\\lVert\\nabla_Fp_1\\rVert^2=p_1(1-p_1)$. Its maximum absolute disagreement with the finite-difference estimates is about $2.68\\times10^{-6}$. Here curvature describes the chosen field. It has not been measured in a family, hospital or institution.",
+      "rationale": "For a surface, K_(f*g)=(K_g-Delta_g(log f)/2)/f. With f=1+6*p1 and the stated base Laplacian/gradient identities this independently checks the numerical routine."
+    },
+    {
+      "id": "utility-assignment",
+      "kind": "assumption",
+      "passage": "Suppose the controller assigns utilities $w=(0,0.5,1)$ to failing, coping and flourishing. Its expected score is\n$$\nU(p)=w^\\top p.\n$$\nWithout further constraints it prefers the vertex $(0,0,1)$. One proposed safeguard is to require a lower bound on Shannon entropy,\n$$\n\\max_p U(p)\n\\quad\\text{subject to}\\quad\nH(p)=-\\sum_i p_i\\log p_i\\ge h.\n$$\nFor an interior solution, the Lagrange multiplier $\\tau>0$ gives\n$$\np_i(\\tau)=\n\\frac{\\exp(w_i/\\tau)}{\\sum_j\\exp(w_j/\\tau)}.\n$$\nThe implementation brackets and bisects $\\tau$ until the entropy constraint is met. It handles the endpoints and tied utility maxima separately; the optimization is numerical.",
+      "rationale": "Weights (0,.5,1) rank three stipulated categories; changing weights changes both optimal probabilities and the floor's utility cost."
+    },
+    {
+      "id": "entropy-objective",
+      "kind": "definition",
+      "passage": "Suppose the controller assigns utilities $w=(0,0.5,1)$ to failing, coping and flourishing. Its expected score is\n$$\nU(p)=w^\\top p.\n$$\nWithout further constraints it prefers the vertex $(0,0,1)$. One proposed safeguard is to require a lower bound on Shannon entropy,\n$$\n\\max_p U(p)\n\\quad\\text{subject to}\\quad\nH(p)=-\\sum_i p_i\\log p_i\\ge h.\n$$\nFor an interior solution, the Lagrange multiplier $\\tau>0$ gives\n$$\np_i(\\tau)=\n\\frac{\\exp(w_i/\\tau)}{\\sum_j\\exp(w_j/\\tau)}.\n$$\nThe implementation brackets and bisects $\\tau$ until the entropy constraint is met. It handles the endpoints and tied utility maxima separately; the optimization is numerical.",
+      "rationale": "The optimization constrains Shannon outcome entropy over the simplex, not action access, refusal or capability."
+    },
+    {
+      "id": "gibbs-method",
+      "kind": "definition",
+      "passage": "Suppose the controller assigns utilities $w=(0,0.5,1)$ to failing, coping and flourishing. Its expected score is\n$$\nU(p)=w^\\top p.\n$$\nWithout further constraints it prefers the vertex $(0,0,1)$. One proposed safeguard is to require a lower bound on Shannon entropy,\n$$\n\\max_p U(p)\n\\quad\\text{subject to}\\quad\nH(p)=-\\sum_i p_i\\log p_i\\ge h.\n$$\nFor an interior solution, the Lagrange multiplier $\\tau>0$ gives\n$$\np_i(\\tau)=\n\\frac{\\exp(w_i/\\tau)}{\\sum_j\\exp(w_j/\\tau)}.\n$$\nThe implementation brackets and bisects $\\tau$ until the entropy constraint is met. It handles the endpoints and tied utility maxima separately; the optimization is numerical.",
+      "rationale": "Lagrange stationarity gives Gibbs weights; stable exponents, adaptive bracketing and 120 bisection steps select the positive multiplier. Endpoint/tie cases are handled separately."
+    },
+    {
+      "id": "entropy-not-permission",
+      "kind": "interpretation",
+      "passage": "More importantly, $H(p)$ is uncertainty over outcomes. It contains no information about which actions the recipient can choose or whose decision produced the distribution. She might freely select a highly predictable outcome. Another person might impose a lottery over all three states. Zero entropy does not establish coercion; high entropy does not establish freedom. Nor is the uniform distribution a model of abandonment. There is no unattended drift process in this example.",
+      "rationale": "Outcome probabilities contain no chooser variable. The permission examples explicitly separate an approved vertex from an unapproved uniform proposal. No unattended dynamics or abandonment process is simulated."
+    },
+    {
+      "id": "alternative-zero-cost",
+      "kind": "interpretation",
+      "passage": "At $h=\\ln2$, the resulting distribution is approximately\n$(0.0528,0.1987,0.7485)$, with expected utility $0.8479$. The loss against the maximum score is $0.1521$. Uniform probability gives utility $0.5$ and maximum entropy $\\ln3$. These values follow from the assigned weights. If instead the score is the probability of coping *or* flourishing, with weights $(0,1,1)$, then $(0,0.5,0.5)$ meets the same entropy floor while retaining maximum utility $1$. The cost of the floor is then zero.",
+      "rationale": "For weights (0,1,1), the tied maximum distribution (0,.5,.5) has H=ln2 and utility 1. /entropy/alternative_score/cost_of_floor is 0; this counters any weight-independent price claim."
+    },
+    {
+      "id": "normativity-not-entropy",
+      "kind": "interpretation",
+      "passage": "Canguilhem's account of health helps locate the mistake. His discussion of disease and normative capacity concerns an organism's ability to meet changed conditions and establish new ways of living [@canguilhem1991, pp. 181–187]. That capacity cannot be read off uncertainty among three assessor-defined labels. A person might have many practicable ways to flourish while the model confidently assigns all probability to “flourishing.” A person with little control over anything might face a very uncertain future. The capacity to revise a norm and entropy within an already fixed classification are different objects.",
+      "rationale": "The model's labels do not enumerate practicable activities or possible revisions to the classification; the counterexamples are this paper's inference, not a theorem attributed to Canguilhem."
+    },
+    {
+      "id": "permission-definition",
+      "kind": "definition",
+      "passage": "An instruction can be represented separately from that forecast. Let a permission record contain an approved target $q_B$, a maximum step fraction $\\delta_B$, and a revocation flag. The controller proposes target $q$ and fraction $\\eta$. In the toy rule,\n$$\np_{t+1}=\n\\begin{cases}\n\\operatorname{Geo}_F(p_t,q;\\min(\\eta,\\delta_B)),\n& \\text{if }q=q_B\\text{ and permission remains valid},\\\\\np_t, & \\text{otherwise}.\n\\end{cases}\n$$\nHere $\\operatorname{Geo}_F(p,q;s)$ is the fraction $s$ of the shortest Fisher arc. A missing permission record authorizes no action. The equality test is numerical, and all target distributions are normalized before comparison.",
+      "rationale": "Permission stores an approved target, allowed arc fraction and revocation. permitted_step checks absence, revocation and target mismatch; target comparisons use atol=1e-12, rtol=0."
+    },
+    {
+      "id": "permission-restrictions",
+      "kind": "assumption",
+      "passage": "The rule is deliberately simple. It assumes a truthful, usable instruction channel and a fixed action whose only modeled attribute is movement toward the target. Real permission concerns means, timing, risk and circumstances as well as ends. A target match alone would be insufficient. The example also has no autonomous dynamics: when an action is rejected, its modeled state stays still. A real recipient does not stop changing when assistance stops.",
+      "rationale": "A valid instruction channel, single recipient, fixed means and no drift are stipulated. The gate does not model real consent capacity, authorization integrity or shutdown dynamics."
+    },
+    {
+      "id": "approved-vertex",
+      "kind": "interpretation",
+      "passage": "| Recipient instruction | Proposed target | Rule's response |\n|:--|:--|:--|\n| Approves predictable flourishing | $(0,0,1)$ | Applies it despite zero outcome entropy |\n| Approves only that target | Uniform lottery | Rejects it despite maximum entropy |\n| Revokes earlier permission | Earlier approved target | Applies no further action |\n| Changes the approved target | Old target, then new target | Rejects the old; accepts the new |",
+      "rationale": "/permission/chosen_predictable_outcome records applied true, entropy 0. This is deterministic gate behavior, not evidence of consent in a population."
+    },
+    {
+      "id": "unapproved-lottery",
+      "kind": "interpretation",
+      "passage": "| Recipient instruction | Proposed target | Rule's response |\n|:--|:--|:--|\n| Approves predictable flourishing | $(0,0,1)$ | Applies it despite zero outcome entropy |\n| Approves only that target | Uniform lottery | Rejects it despite maximum entropy |\n| Revokes earlier permission | Earlier approved target | Applies no further action |\n| Changes the approved target | Old target, then new target | Rejects the old; accepts the new |",
+      "rationale": "/permission/unapproved_high_entropy_proposal records entropy-floor met but applied false. This is deterministic gate behavior, not evidence of consent in a population."
+    },
+    {
+      "id": "revocation",
+      "kind": "interpretation",
+      "passage": "| Recipient instruction | Proposed target | Rule's response |\n|:--|:--|:--|\n| Approves predictable flourishing | $(0,0,1)$ | Applies it despite zero outcome entropy |\n| Approves only that target | Uniform lottery | Rejects it despite maximum entropy |\n| Revokes earlier permission | Earlier approved target | Applies no further action |\n| Changes the approved target | Old target, then new target | Rejects the old; accepts the new |",
+      "rationale": "/permission/actions_after_revocation is 0; the trace has two authorized steps and three revoked proposals. This is deterministic gate behavior, not evidence of consent in a population."
+    },
+    {
+      "id": "changed-target",
+      "kind": "interpretation",
+      "passage": "| Recipient instruction | Proposed target | Rule's response |\n|:--|:--|:--|\n| Approves predictable flourishing | $(0,0,1)$ | Applies it despite zero outcome entropy |\n| Approves only that target | Uniform lottery | Rejects it despite maximum entropy |\n| Revokes earlier permission | Earlier approved target | Applies no further action |\n| Changes the approved target | Old target, then new target | Rejects the old; accepts the new |",
+      "rationale": "/permission/changed_goal records old target rejected, new target accepted at utility .55. This is deterministic gate behavior, not evidence of consent in a population."
+    },
+    {
+      "id": "permission-no-incentive-solution",
+      "kind": "interpretation",
+      "passage": "This check is a property of a programmed gate. It does not show that an optimizing system will preserve the gate, refrain from manipulating the instruction channel, or pass the same constraint to systems it creates. Those are among the harder issues raised by corrigibility research, which studies agents' responses to correction and shutdown [@soares2015, §§2, 4–5]. Even stopping may require a safe transition rather than an immediate halt. The present rule leaves incentives, self-modification and shutdown dynamics outside its scope.",
+      "rationale": "Code contains no optimizing agent able to remove/manipulate the gate, self-modify or create successor agents. Execution success cannot establish full corrigibility."
+    },
+    {
+      "id": "valid-refusal",
+      "kind": "normative",
+      "passage": "A permission channel also does not settle whose wishes should prevail when several people are affected, or whether a particular refusal relieves others of a duty. The normative commitment here is specific: in the non-emergency, single-recipient case modeled, an assessed improvement does not override a valid refusal. That commitment enters as a constraint. No property of a sphere could derive it.",
+      "rationale": "For the modeled non-emergency single-recipient situation, the paper chooses to respect valid refusal regardless of utility gain. It does not derive that obligation from the metric or generalize to all duties."
+    },
+    {
+      "id": "no-empirical-validation",
+      "kind": "interpretation",
+      "passage": "The code, full-precision results, regression tests and versioned execution receipt accompany the paper. These deterministic calculations use no observations of recipients or caring institutions.",
+      "rationale": "All scientific inputs are deterministic distributions, formulas and assigned parameters. No participant data or action effects were measured; the receipt and 18 executed tests check the implementation."
+    },
+    {
+      "id": "experience-omitted",
+      "kind": "interpretation",
+      "passage": "The model leaves the experience of caring undescribed, without establishing any general limit on formal accounts of experience. Its immediate limit is practical. When the device predicts a better afternoon, the person whose afternoon it is still has something to say. Her answer belongs in the next decision, including when the answer is no.",
+      "rationale": "No phenomenological variable is supplied. This is a boundary of this construction, not an impossibility proof about formal accounts of experience."
+    },
+    {
+      "id": "whitehead-concern",
+      "kind": "source",
+      "passage": "Whitehead offers a useful starting word, though not an engineering definition. In *Adventures of Ideas*, he writes that “The occasion as subject has a ‘concern’ for the object.” Concern describes how something enters experience with affective significance, before the relation is reduced to knowing an object [@whitehead1967, pp. 175–177]. That account should not be flattened into an input-output connection. A sensor can respond to a body without either experiencing concern or helping it.",
+      "evidence": {
+        "citation_id": "whitehead1967",
+        "locator": "Chapter XI §§1–4, pp.175–177",
+        "verified": true,
+        "verification_note": "Title/copyright and relevant pages read in the Free Press primary scan; short quotation located at p.176. Functional coupling is explicitly distinguished from Whitehead's affective account."
+      }
+    },
+    {
+      "id": "noddings-response",
+      "kind": "source",
+      "passage": "The recipient's role is already central in care ethics. Noddings treats the cared-for's reception and response as part of a caring relation; over successive encounters, those responses help the carer revise what she does [@noddings2002, pp. 18–20]. The permission rule developed here is narrower. It implements an explicit instruction channel in a toy controller, not a definition of every caring relationship. It assumes a recipient able to communicate a valid instruction. Infancy, impaired decision-making, conflicting duties and emergency intervention require judgments the example does not supply.",
+      "evidence": {
+        "citation_id": "noddings2002",
+        "locator": "Chapter 1, pp.18–20",
+        "verified": true,
+        "verification_note": "Publisher identity and the primary chapter's reception/response passages inspected. The permission gate is a narrower proposal, not Noddings's definition."
+      }
+    },
+    {
+      "id": "chentsov-conditional",
+      "kind": "source",
+      "passage": "For positive probabilities summing to one, choose the Fisher metric\n$$\ng_F(v,v)=\\sum_{i=1}^{3}\\frac{v_i^2}{p_i},\n\\qquad \\sum_i v_i=0.\n$$\nThere is a principled statistical reason for this choice. In Chentsov's finite-model characterization, a continuous metric family preserved by congruent Markov embeddings is a constant multiple of the Fisher metric; these embeddings correspond to information-preserving statistical transformations [@ay2015, Proposition 3.19 and its preceding discussion]. The requirement applies across statistical models. It is stronger than changing coordinates on this simplex.",
+      "evidence": {
+        "citation_id": "ay2015",
+        "locator": "arXiv 1207.6736v4, Proposition 3.19 and preceding discussion",
+        "verified": true,
+        "verification_note": "Abstract, introduction and finite-model characterization read; journal metadata checked. Uniqueness is conditional on invariance across models; the full generalization proof was not audited."
+      }
+    },
+    {
+      "id": "canguilhem-capacity",
+      "kind": "source",
+      "passage": "Canguilhem's account of health helps locate the mistake. His discussion of disease and normative capacity concerns an organism's ability to meet changed conditions and establish new ways of living [@canguilhem1991, pp. 181–187]. That capacity cannot be read off uncertainty among three assessor-defined labels. A person might have many practicable ways to flourish while the model confidently assigns all probability to “flourishing.” A person with little control over anything might face a very uncertain future. The capacity to revise a norm and entropy within an already fixed classification are different objects.",
+      "evidence": {
+        "citation_id": "canguilhem1991",
+        "locator": "Disease, Cure, Health, pp.181–187; conclusion pp.226–228",
+        "verified": true,
+        "verification_note": "Primary text passages and Zone edition checked. The paper paraphrases normative capacity without identifying it with Shannon entropy."
+      }
+    },
+    {
+      "id": "corrigibility-limits",
+      "kind": "source",
+      "passage": "This check is a property of a programmed gate. It does not show that an optimizing system will preserve the gate, refrain from manipulating the instruction channel, or pass the same constraint to systems it creates. Those are among the harder issues raised by corrigibility research, which studies agents' responses to correction and shutdown [@soares2015, §§2, 4–5]. Even stopping may require a safe transition rather than an immediate halt. The present rule leaves incentives, self-modification and shutdown dynamics outside its scope.",
+      "evidence": {
+        "citation_id": "soares2015",
+        "locator": "§2 desiderata; §§4–5",
+        "verified": true,
+        "verification_note": "Primary PDF motivation, desiderata and limitations inspected; the toy gate is explicitly not a solution to incentive preservation, self-modification or safe-shutdown dynamics."
+      }
+    }
+  ],
+  "runs": [
+    {
+      "id": "model-checks",
+      "required": true,
+      "record": "verification/model-checks.json"
+    }
+  ]
+}

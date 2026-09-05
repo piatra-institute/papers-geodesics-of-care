@@ -1,5 +1,15 @@
 # Brief
 
+## September 2026 revision
+
+The current essay separates prognosis geometry, assigned effort and recipient
+permission. It no longer claims a quasi-metric violation, a compulsory metric
+of care, a measured kinship gradient or an entropy-based autonomy constraint.
+Five deterministic illustrations and 18 tests support the revised, explicitly
+conditional model. See editorial.md, source-checks.md and claims.yaml.
+
+## Original pre-research brief (historical)
+
 Written before research begins. See the workspace docs (run `papers docs`): research-pipeline.md §1.
 
 ## Question

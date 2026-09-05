@@ -1,0 +1,150 @@
+[
+  {
+    "id": "whitehead1967",
+    "type": "book",
+    "title": "Adventures of Ideas",
+    "author": [
+      {
+        "family": "Whitehead",
+        "given": "Alfred North"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1967
+        ]
+      ]
+    },
+    "original-date": {
+      "date-parts": [
+        [
+          1933
+        ]
+      ]
+    },
+    "publisher": "Free Press",
+    "publisher-place": "New York",
+    "URL": "https://s3.amazonaws.com/arena-attachments/270366/f3f6d5cfe69f655b1a7020aba868ef24.pdf"
+  },
+  {
+    "id": "noddings2002",
+    "type": "book",
+    "title": "Starting at Home: Caring and Social Policy",
+    "author": [
+      {
+        "family": "Noddings",
+        "given": "Nel"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2002
+        ]
+      ]
+    },
+    "publisher": "University of California Press",
+    "publisher-place": "Berkeley",
+    "URL": "https://www.ucpress.edu/books/starting-at-home/paper"
+  },
+  {
+    "id": "ay2015",
+    "type": "article-journal",
+    "title": "Information geometry and sufficient statistics",
+    "author": [
+      {
+        "family": "Ay",
+        "given": "Nihat"
+      },
+      {
+        "family": "Jost",
+        "given": "Jürgen"
+      },
+      {
+        "family": "Lê",
+        "given": "Hông Vân"
+      },
+      {
+        "family": "Schwachhöfer",
+        "given": "Lorenz"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2015
+        ]
+      ]
+    },
+    "container-title": "Probability Theory and Related Fields",
+    "volume": "162",
+    "issue": "1–2",
+    "page": "327–364",
+    "DOI": "10.1007/s00440-014-0574-8",
+    "URL": "https://arxiv.org/abs/1207.6736v4"
+  },
+  {
+    "id": "canguilhem1991",
+    "type": "book",
+    "title": "The Normal and the Pathological",
+    "author": [
+      {
+        "family": "Canguilhem",
+        "given": "Georges"
+      }
+    ],
+    "translator": [
+      {
+        "family": "Fawcett",
+        "given": "Carolyn R."
+      },
+      {
+        "family": "Cohen",
+        "given": "Robert S."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1991
+        ]
+      ]
+    },
+    "publisher": "Zone Books",
+    "publisher-place": "New York",
+    "URL": "https://www.zonebooks.org/books/81-the-normal-and-the-pathological"
+  },
+  {
+    "id": "soares2015",
+    "type": "paper-conference",
+    "title": "Corrigibility",
+    "author": [
+      {
+        "family": "Soares",
+        "given": "Nate"
+      },
+      {
+        "family": "Fallenstein",
+        "given": "Benja"
+      },
+      {
+        "family": "Yudkowsky",
+        "given": "Eliezer"
+      },
+      {
+        "family": "Armstrong",
+        "given": "Stuart"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2015
+        ]
+      ]
+    },
+    "container-title": "AAAI Workshop on AI and Ethics",
+    "URL": "https://intelligence.org/files/Corrigibility.pdf"
+  }
+]

@@ -1,5 +1,10 @@
 # Sources
 
+September 2026 note: this is the original bibliography, retained as provenance.
+It is not the current citation inventory and contains superseded entries noted
+in the June review. Use paper/references.json and source-checks.md for the
+revised manuscript. Historical verification statements below are not renewed.
+
 The frozen bibliography. Each entry in the form it takes in the paper's `## References`, with a one-line provenance note. See the workspace docs (`papers docs`): research-pipeline.md §4. Every in-text `et al.` maps to a co-authored entry here. 34 entries; `papers refs` reports 34 cited / 34 bib / 0 missing / 0 unused.
 
 ## Bibliography

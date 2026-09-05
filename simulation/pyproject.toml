@@ -1,7 +1,7 @@
 [project]
 name = "geodesics-of-care-sim"
 version = "0.1.0"
-description = "Exact information-geometry studies for Geodesics of Care: the Fisher-Rao manifold self-test, Gauss-Bonnet routing, directed care, and the price of autonomy"
+description = "Illustrative Fisher-Rao geometry, assigned effort, entropy-constrained utility and recipient permission"
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.26",

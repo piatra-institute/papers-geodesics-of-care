@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "date": "2026-09-05",
+  "manuscript_sha256": "fa27f6e678831cb79770ff762d1fb7829df9e1b4ae3065802f35050d031ba821",
+  "full_read": true,
+  "argument_review": true,
+  "structure_review": true,
+  "voice_review": true,
+  "source_review": true,
+  "final_read": true,
+  "notes": "Full original manuscript/code and final manuscript read. Rebuilt around prognosis, assigned effort and recipient permission. Five primary references checked at the disclosed scope; 69 claim records bind computations and distinguish assumptions, interpretations and normative commitments. Eighteen regression tests and the five-illustration run pass. Removed compulsory moral geometry, curvature-as-delegation, measured kinship, entropy-as-autonomy and machine-precision assertions. The 209-word abstract and supporting docs agree. The gate is not an empirical model of consent or a full corrigibility solution.",
+  "remaining": "No required local work; revision not deployed."
+}

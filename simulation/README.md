@@ -1,33 +1,84 @@
-# Simulation — Geodesics of Care
+# Model — Geodesics of Care
 
-Four exact, deterministic information-geometry studies behind the paper. No random seed: every number is exact Fisher-Rao geometry, a closed-form Gauss-Bonnet quantity, or an exact entropy-constrained optimum.
+Five deterministic illustrations. No participants, estimated action effects,
+measured costs, training or stochastic simulations. NumPy and Matplotlib are the
+only direct dependencies; uv.lock pins the environment. The recorded run used
+Python 3.13.3, NumPy 2.4.6 and Matplotlib 3.10.9 on macOS ARM64.
 
-```bash
-cd simulation
-uv run run_all.py      # writes output/results.json and output/figures/*.png
-```
+## Run and test
 
-Every decimal cited in the paper is a key in `output/results.json` (the `papers claims` gate checks the paper's prose decimals against it).
+With the existing environment, from this directory:
 
-## The manifold
+~~~sh
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python run_all.py
+~~~
 
-The cared-for is a distribution over three viability states (failing, coping, flourishing), a point on the 2-simplex. Chentsov's theorem forces the Fisher-Rao metric, under which the map `p -> 2*sqrt(p)` is an isometry onto a sphere of radius 2. The geodesic distance is `d(p,q) = 2*arccos(sum_i sqrt(p_i q_i))`, the great-circle distance, and the constant Gaussian curvature is 1/4.
+For a clean environment, run uv sync --frozen first. If Matplotlib's normal
+cache is unwritable, set MPLCONFIGDIR to a task-specific writable temporary
+directory.
 
-## What it computes
+From the collection root, record a run after changing scientific inputs:
 
-`analyses.py`
+~~~sh
+python3 tooling/papers.py run geodesics-of-care --id model-checks \
+  --cwd simulation \
+  --artifact simulation/output/results.json \
+  --artifact simulation/output/figures/geometry.png \
+  --artifact simulation/output/figures/care.png \
+  --artifact simulation/output/figures/entropy.png \
+  --execution-result simulation/output/results.json \
+  -- .venv/bin/python run_all.py
+~~~
 
-- **`study_manifold`** — the self-test. `gaussian_curvature`, built from the metric components and the Brioschi formula with numerical partials, is fed the Fisher metric on a grid and returns 0.25 with maximum deviation 0.0. Confirms the triangle inequality holds (largest slack 0). This certifies the differential-geometry machinery the other studies rely on.
-- **`study_routing`** — Gauss-Bonnet on a care-triangle (failing / coping / flourishing vertices). Interior angles sum to 3.3164; the spherical excess 0.1748 equals 1/4 times the enclosed area 0.6994. Routing `A->B->C` costs 2.34 against the direct `A->C` 1.8862 (gap 0.4539): concern does not route, because the manifold is curved, not because any metric axiom fails.
-- **`study_directed`** — direction from the carer's control metric `g_A = f_A * g_Fisher`, a conformal reweighting by legibility. Two carers on the same geodesic pay 2.3283 (attuned) vs 3.6972 (blind), asymmetry 1.5879. The kin gradient (cost = geodesic length / legibility) runs 1.6095 (kin) to 8.0476 (distant stranger), a factor of 5.0. Under the reweighting the curvature is no longer constant, ranging 0.1395 to 0.2601.
-- **`study_autonomy`** — the viability-maximizing distribution subject to a Shannon-entropy floor is an exponential-family (Gibbs) tilt, a point on the e-geodesic. Coercion (H=0) reaches viability 1.0 at a zero-entropy vertex; the autonomy floor (H>=ln2) reaches 0.8479; abandonment (uniform) falls to 0.5. Price of autonomy = 0.1521.
+The receipt fingerprints code, tests, dependency declarations/lockfile and all
+declared artifacts. PASS means the five calculations and three plots ran,
+not that a hypothesis about care was confirmed. The child interpreter records
+its actual library versions in results.json; the wrapper records its own
+runtime separately.
 
-`figures.py` (pure plotters, recompute geometry and read scalars from the results dict)
+## What is calculated
 
-- `output/figures/geometry.png` — the geodesic care-triangle with its spherical excess, and the care-metric curvature field across the simplex.
-- `output/figures/care.png` — the kin gradient (cost vs legibility) and directedness (two carers on one geodesic).
-- `output/figures/autonomy.png` — viability vs the option-entropy floor (the price of autonomy), and the distribution each policy leaves the other in.
+- **manifold:** Fisher-Rao distances use the radius-2 sphere convention and a
+  stable half-angle expression. All 125 ordered triples of five points satisfy
+  the triangle inequality. The coordinate-straight comparison uses 2,000
+  segments. Brioschi curvature estimates use central differences on the declared
+  interior grid at steps 1e-3, 3e-4 and 1e-4. The final maximum error is about
+  6.01e-6, not zero.
+- **routing:** three distributions p, q, r; angle excess and independently
+  calculated solid-angle area. A separate flat-plane detour demonstrates that
+  excess path cost needs no curvature. Neither calculation models delegation.
+- **effort:** assigned constant efficiencies and variable conformal tensor
+  multipliers. Length integrates sqrt(f), not f. The fixed Fisher arc is
+  integrated by midpoint quadrature with 2,000 segments; no variable-metric
+  shortest-path optimization is performed. Reverse costs agree for each fixed
+  metric. For f=1+6*p1, finite-difference curvature is checked against
+  K_f=(1/4 - Delta_F(log f)/2)/f, derived using
+  Delta_F(p1)=(1-3*p1)/2 and |grad_F(p1)|^2=p1*(1-p1).
+- **entropy:** maximize assigned expected utility under an outcome-entropy
+  floor. Stable Gibbs weights and bracketed 120-step bisection handle interior
+  optima; endpoint and tied-maximum cases are explicit. At ln(2), weights
+  (0,.5,1) yield score .847876 and cost .152124; weights (0,1,1) yield score 1
+  and cost 0. The plotted curve samples 26 floors. Entropy is not autonomy.
+- **permission:** an exogenous valid instruction identifies an approved target,
+  maximum arc fraction and revocation state. No permission, revocation or a
+  target mismatch produces no applied action. Tests cover predictable approved
+  outcomes, unapproved high-entropy proposals, revocation and changed goals
+  that lower the assigned utility. There is no drift, manipulation, delegation,
+  authentication, capacity assessment or safe-shutdown model.
 
-## Status
+These choices are declared, not fitted. Numerical consistency is distinct from
+empirical or ethical validation. Eighteen regression tests cover mathematical
+identities, boundary cases, sensitivity, permission handling and JSON validity.
 
-Complete. The geometry is not stipulated: the metric is forced by Chentsov's theorem and the curvature self-test recovers the known value exactly, so the results are facts about the Fisher-Rao manifold rather than about tuned parameters. Dependencies: `numpy` and `matplotlib` (see `pyproject.toml`).
+## Current outputs
+
+- output/results.json: full-precision results, execution status and child runtime.
+- output/figures/geometry.png: Fisher arcs and conformal curvature.
+- output/figures/care.png: assigned effort comparisons.
+- output/figures/entropy.png: the outcome-entropy calculation.
+
+Older autonomy.png / curvature.png, if present, are unreferenced historical
+artifacts and are not regenerated. Do not use them for the current paper.
+The former results keys directed and autonomy have been replaced by effort,
+entropy and permission; callers of the old schema must migrate.

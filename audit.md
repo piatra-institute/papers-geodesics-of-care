@@ -2,6 +2,30 @@
 
 Dated log of editorial passes and verification runs. Newest first. See the workspace docs (run `papers docs`): writing-pipeline.md §7 and refresh-pipeline.md.
 
+## 2026-09-05 — prognosis, effort and permission
+
+Complete local revision. The title is now “Geodesics of Care: Distance, Effort
+and Permission in a Model of Help”; the abstract has 209 words. The paper keeps
+the geometric illustration but no longer treats statistical invariance as a
+compulsory ethical metric, curvature as an argument against delegation, assigned
+efficiencies as a measured kinship gradient, or outcome entropy as autonomy.
+
+Five deterministic illustrations replace the previous four. Added independent
+area and conformal-curvature checks, a flat detour counterexample, utility-weight
+sensitivity, and a separate recipient permission record with revocation and
+changed goals. Curvature errors are retained at full precision rather than
+rounded to zero. Eighteen regression tests pass; model-checks records completed
+execution and actual child runtime without claiming empirical confirmation.
+
+Five primary sources inspected at the scopes disclosed in source-checks.md;
+69 claim records bind the current manuscript. Current metadata, READMEs and
+history labels aligned. Rebuilt PDF: nine pages, all individually inspected,
+then final manuscript reread. The figure legend overlap found on the first
+inspection was corrected and its run repeated. No deployment or push.
+
+Earlier verification claims below remain historical. In particular, their
+“exact” and autonomy language does not apply to this revision.
+
 ## 2026-06-13 — voice reform
 
 Editorial pass to remove AI-writing tells per tooling/docs/voice.md.
