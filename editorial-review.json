@@ -1,13 +1,13 @@
 {
   "schema": 1,
   "date": "2026-09-05",
-  "manuscript_sha256": "fa27f6e678831cb79770ff762d1fb7829df9e1b4ae3065802f35050d031ba821",
+  "manuscript_sha256": "08909cd427e926cc24b124477e4f699c0d221e9fa6f463221dbf6102d6d4283b",
   "full_read": true,
   "argument_review": true,
   "structure_review": true,
   "voice_review": true,
   "source_review": true,
   "final_read": true,
-  "notes": "Full original manuscript/code and final manuscript read. Rebuilt around prognosis, assigned effort and recipient permission. Five primary references checked at the disclosed scope; 69 claim records bind computations and distinguish assumptions, interpretations and normative commitments. Eighteen regression tests and the five-illustration run pass. Removed compulsory moral geometry, curvature-as-delegation, measured kinship, entropy-as-autonomy and machine-precision assertions. The 209-word abstract and supporting docs agree. The gate is not an empirical model of consent or a full corrigibility solution.",
+  "notes": "Prose revision: descriptive headings; abstract rewritten (213 words) without self-reference; first-person singular and generic 'she/her' replaced; the closing aphorism restated as a declarative conclusion; exact range of the effort-metric curvature added beside the grid range; claims rebound (69) and one claim added for the refined curvature maximum; every other number and citation preserved.",
   "remaining": "No required local work; revision not deployed."
 }

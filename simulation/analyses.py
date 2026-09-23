@@ -218,7 +218,34 @@ def study_effort():
     samples = [{"x": x, "y": y,
                 "numerical": gaussian_curvature(conformal_EFG, x, y),
                 "analytic": conformal_curvature_exact(x)} for x, y in _interior_grid()]
+    # The conformal curvature depends on p_1 alone, so its exact range over the
+    # grid's p_1 interval is a one-dimensional problem: the minimum is at the
+    # right endpoint (K decreases past its peak) and the interior maximum is
+    # located by golden-section search on the analytic formula.
+    xs = sorted({x for x, _ in _interior_grid()})
+    lo, hi = xs[0], xs[-1]
+    ga, gb = lo, hi
+    phi = (np.sqrt(5) - 1) / 2
+    for _ in range(200):
+        c1, c2 = gb - phi * (gb - ga), ga + phi * (gb - ga)
+        if conformal_curvature_exact(c1) > conformal_curvature_exact(c2):
+            gb = c2
+        else:
+            ga = c1
+    x_peak = (ga + gb) / 2
+    k_peak = conformal_curvature_exact(x_peak)
+    fine = np.linspace(lo, hi, 20001)
+    k_fine = np.array([conformal_curvature_exact(x) for x in fine])
+    k_min_exact = float(min(conformal_curvature_exact(lo), conformal_curvature_exact(hi)))
+    assert abs(k_peak - k_fine.max()) < 1e-8 and abs(k_min_exact - k_fine.min()) < 1e-12
+    grid_max = max(row["numerical"] for row in samples)
+    grid_min = min(row["numerical"] for row in samples)
+    assert k_peak >= grid_max - 1e-5 and k_min_exact <= grid_min + 1e-5
     return {
+        "curvature_p1_interval": [lo, hi],
+        "curvature_max_refined": float(k_peak),
+        "curvature_argmax_p1_refined": float(x_peak),
+        "curvature_min_exact": k_min_exact,
         "start": start, "goal": goal, "base_distance": base,
         "constant_factors": constants,
         "lowest_over_highest_efficiency_cost": constants[-1]["path_length"] / constants[0]["path_length"],

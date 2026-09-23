@@ -1,7 +1,5 @@
 {
-  "schema": 1,
-  "date": "2026-09-05",
-  "pdf_sha256": "48f88bd3c940923bd76bd5603279dffa940fcf7d3b55ddfdba176396b4b85886",
+  "pdf_sha256": "10a15bbc42f08b5bcfce7d4f0ac1d7e3a240e6887e53e3f59f25afbafc318f1a",
   "page_count": 9,
   "pages_inspected": [
     1,
@@ -15,5 +13,5 @@
     9
   ],
   "all_pages_inspected": true,
-  "notes": "All nine final pages individually rendered at 110 dpi and inspected after the last rebuild. Title, subtitle, institute and date occupy separate lines. Mathematical notation, three figures, permission table and five references are legible; no clipping/overlap. The first review found a legend crossing the curve; it was relocated and the run/build renewed. Closing tightened so all references fit on the final page."
+  "notes": "All 9 pages inspected after the prose revision; three figure panel titles replaced with descriptive ones and two captions reworded. Metadata-only rebuild: the web blurb in metadata.yaml, a hashed build input, changed, so the PDF was re-rendered (657d2069e8b2 to 10a15bbc42f0); the rendered text is byte-for-byte identical and no page was re-inspected."
 }

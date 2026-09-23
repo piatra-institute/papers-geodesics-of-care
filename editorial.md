@@ -88,3 +88,12 @@ manuscript. The initial chart legend overlap was fixed and the run/build renewed
 the tightened closing keeps the five references on the final page. Version-bound
 editorial and visual records identify the finished local artifacts. No publication
 or push was performed; older unreferenced figures remain historical artifacts.
+
+## Reverse outline
+
+1. *1. Introduction*
+2. *2. The Fisher-Rao simplex of prognoses*
+3. *3. Path costs and conformal effort fields*
+4. *4. Entropy floors and assigned utility*
+5. *5. A recipient permission rule*
+6. *6. Requirements for application*

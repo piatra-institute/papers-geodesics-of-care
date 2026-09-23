@@ -2,6 +2,13 @@
 
 Dated log of editorial passes and verification runs. Newest first. See the workspace docs (run `papers docs`): writing-pipeline.md §7 and refresh-pipeline.md.
 
+## 2026-09-23 — prose revision
+
+Prose revised against the house standards. Headings made descriptive (Introduction, The Fisher-Rao simplex of prognoses, Path costs and conformal effort fields, Entropy floors and assigned utility, A recipient permission rule, Requirements for application).
+Tic counts before -> after: 'rather than' 1 -> 0; 'this paper' 2 -> 0 (one 'the paper' reference to the repository rephrased); merely 2 -> 0; first-person singular ('I will call') removed; generic she/her for the recipient and carer -> they.
+Grid audit: the effort-metric curvature range for f = 1 + 6 p_1 was reported only as the range over the 9x9 interior sampling grid (0.1395 to 0.2601). The analytic curvature depends on p_1 alone, so analyses.py now computes the exact range over the grid's p_1 interval [0.12, 0.68]: the minimum 0.1395 lies at the endpoint p_1 = 0.68 (grid value agrees to 1e-6), and the maximum is 0.2607 at p_1 = 0.2110 by golden-section search (new results.json fields curvature_max_refined, curvature_argmax_p1_refined, curvature_min_exact, curvature_p1_interval; asserted against a 20001-point fine scan and against the grid extrema). The grid maximum 0.2601 at p_1 = 0.20 is kept and labeled as a grid value; the text now states both. The entropy-floor multiplier tau is already found by bisection; the 2,000-segment chord length is a declared quadrature. No other grid-derived quantities.
+Re-run via papers.py run (id model-checks); results.json changed only by the added fields and the recorded interpreter path; 18 unit tests pass. claims.yaml rebound to the rewritten sentences with manual overrides for 22 paragraph-level claims (low similarity scores reflect the change from paragraph to sentence passages; every binding checked by hand), and claim effort-curvature-max-refined added.
+
 ## 2026-09-05 — prognosis, effort and permission
 
 Complete local revision. The title is now “Geodesics of Care: Distance, Effort

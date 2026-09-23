@@ -249,6 +249,13 @@
     }
   },
   "effort": {
+    "curvature_p1_interval": [
+      0.12,
+      0.68
+    ],
+    "curvature_max_refined": 0.2606605087954663,
+    "curvature_argmax_p1_refined": 0.21104687975027486,
+    "curvature_min_exact": 0.13953994443421958,
     "start": [
       0.7,
       0.22,
@@ -982,7 +989,7 @@
   },
   "runtime": {
     "python": "3.13.3",
-    "executable": "/Users/ly3xqhl8g9/Data/i/theings/piatra/content/piatra-papers/2026/06/geodesics-of-care/simulation/.venv/bin/python",
+    "executable": "/Users/ly3xqhl8g9/Data/i/theings/piatra/content/piatra-papers/2026/06/geodesics-of-care/simulation/.venv/bin/python3",
     "numpy": "2.4.6",
     "matplotlib": "3.10.9",
     "platform": "macOS-15.1-arm64-arm-64bit-Mach-O",

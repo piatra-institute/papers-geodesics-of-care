@@ -61,7 +61,7 @@ def plot_geometry(results, path):
     right.axhline(.25, color=MUTED, ls="--", label="base Fisher metric")
     right.set_xlabel("Failing probability  $p_1$", fontsize=10)
     right.set_ylabel("Gaussian curvature", fontsize=10)
-    right.set_title("A chosen effort field changes curvature", fontsize=11)
+    right.set_title("Curvature of the effort metric  $f=1+6p_1$", fontsize=11)
     right.spines[["top", "right"]].set_visible(False)
     right.legend(fontsize=9, frameon=False, loc="lower left")
     _finish(fig, path)
@@ -77,7 +77,7 @@ def plot_effort(results, path):
                  color=ACCENT, s=42, zorder=3)
     left.set_xlabel("Assigned efficiency  $\\ell$", fontsize=10)
     left.set_ylabel("Length with $f=1/\\ell^2$", fontsize=10)
-    left.set_title("Constant effort multiplier", fontsize=11)
+    left.set_title("Path cost under constant efficiency", fontsize=11)
     fields = effort["variable_fields"]
     values = [row["path_length"] for row in fields]
     bars = right.bar([f"$\\alpha={row['alpha']:g}$" for row in fields], values,
@@ -113,7 +113,7 @@ def plot_entropy(results, path):
         right.bar(x + shift*width, entropy[key], width, label=label, color=color)
     right.set_xticks(x, ["failing", "coping", "flourishing"])
     right.set_ylabel("Probability", fontsize=10)
-    right.set_title("Distributions, not permissions", fontsize=11)
+    right.set_title("Vertex, floor optimum and uniform distribution", fontsize=11)
     right.set_ylim(0, 1.2)
     right.legend(fontsize=9, frameon=False, loc="upper left")
     for ax in (left, right):

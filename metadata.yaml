@@ -1,18 +1,33 @@
 slug: geodesics-of-care
 web_slug: geodesics-of-care
-title: "Geodesics of Care: Distance, Effort and Permission in a Model of Help"
+title: 'Geodesics of Care: Distance, Effort and Permission in a Model of Help'
 header: Geodesics of Care
-created: "2026-06"
-date: "June 2026"
+created: 2026-06
+date: June 2026
 paper_dir: paper
 has_simulation: true
 claims_target: claim-ledger
 build_resources:
-  - simulation/output/figures/geometry.png
-  - simulation/output/figures/care.png
-  - simulation/output/figures/entropy.png
+- simulation/output/figures/geometry.png
+- simulation/output/figures/care.png
+- simulation/output/figures/entropy.png
 repo: git@github.com:piatra-institute/papers-geodesics-of-care.git
 github: https://github.com/piatra-institute/papers-geodesics-of-care
-status: published  # Existing deployment; this local September revision is not deployed.
-abstract: >-
-  A system may improve its forecast of someone's welfare while losing sight of what that person wants. This paper uses a small geometric model to distinguish three questions: how a represented condition changes, what an intervention costs, and who may authorize it. A prognosis over failing, coping and flourishing is placed on a probability simplex with the Fisher-Rao metric. Statistical invariance motivates this metric; it does not make it compulsory for care. Worked calculations show how a conformal effort field changes path costs and curvature, while a flat counterexample shows why a costly detour says nothing by itself about delegating responsibility. The main ethical distinction appears when outcome entropy is compared with recipient permission. A freely chosen predictable outcome can have zero entropy; an imposed lottery can have high entropy. An entropy floor therefore constrains uncertainty, not autonomy. With assigned utility weights, its calculated cost is 0.1521; changing the weights can remove that cost entirely. A separate permission rule lets the recipient refuse, revoke or change a target, including when the new target scores worse for the controller. These are deterministic illustrations and implementation checks, not observations of caring practice. Their value is to make the model's commitments inspectable without allowing a welfare score to speak for its recipient.
+status: published
+abstract: 'A system can improve its forecast of a person''s welfare while losing track of what that person
+  wants. We use a small geometric model to separate three questions: how a represented condition changes,
+  what an intervention costs, and who may authorize it. A prognosis over failing, coping and flourishing
+  is placed on a probability simplex with the Fisher-Rao metric, which statistical invariance motivates
+  but does not make compulsory for care. Worked calculations show how a conformal effort field changes
+  path costs and curvature, and a flat counterexample shows that a costly detour carries no information
+  by itself about delegating responsibility. The central ethical distinction concerns outcome entropy
+  and recipient permission. A freely chosen predictable outcome can have zero entropy, and an imposed
+  lottery can have high entropy, so an entropy floor constrains uncertainty and leaves autonomy unaddressed.
+  With assigned utility weights, the floor''s calculated cost is 0.1521, and a different choice of weights
+  removes the cost entirely. A separate permission rule lets the recipient refuse, revoke or change a
+  target, including when the new target scores worse for the controller. All results are deterministic
+  illustrations and implementation checks with no observations of caring practice. They make the model''s
+  commitments inspectable and prevent a welfare score from standing in for the recipient''s own instruction.'
+web_blurb: A Fisher-Rao model of prognosis separates outcome forecasts, intervention costs and recipient
+  permission. An entropy floor constrains uncertainty without protecting autonomy, while a permission
+  rule lets the recipient refuse, revoke or change a target.

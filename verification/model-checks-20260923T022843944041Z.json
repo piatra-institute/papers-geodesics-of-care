@@ -1,12 +1,10 @@
 {
   "schema": 1,
   "id": "model-checks",
-  "started": "2026-09-23T02:28:42.923262+00:00",
-  "finished": "2026-09-23T02:28:43.931256+00:00",
+  "started": "2026-09-05T07:31:25.919172+00:00",
+  "finished": "2026-09-05T07:31:26.893602+00:00",
   "command": [
-    "uv",
-    "run",
-    "python",
+    ".venv/bin/python",
     "run_all.py"
   ],
   "cwd": "simulation",
@@ -15,26 +13,26 @@
     "python": "3.12.4 (v3.12.4:8e8a4baf65, Jun  6 2024, 17:33:18) [Clang 13.0.0 (clang-1300.0.29.30)]",
     "platform": "macOS-15.1-arm64-arm-64bit"
   },
-  "execution_result": null,
+  "execution_result": "simulation/output/results.json",
   "execution": {
     "status": "PASS",
     "exit_code": 0,
-    "detail": "command completed"
+    "detail": "suite reports PASS"
   },
   "input_scope": "execution-v1",
   "additional_inputs": [],
   "inputs": {
-    "simulation/analyses.py": "24feb29daf7b010be39a56cd5fd372d8447acbfdd083ba856b3de78d2639103a",
-    "simulation/figures.py": "10f6a59ac504662bdbcdaca7a8eb8e1ccc90ff0ad691d1a7c2cf29b949ce629a",
+    "simulation/analyses.py": "307e8ba7bd470b971c374483c300340bba2330e5cd8742c83ec0d1dd75905a22",
+    "simulation/figures.py": "aba2e6ecf960e84eee305ce8b46ca3351159cf97aea2c191f514239dfbe07d2c",
     "simulation/pyproject.toml": "458d288106d1e50e90edc7e1aa8c9ac4b94a34e6701075268f4537eb0202b54e",
     "simulation/run_all.py": "dd3983ebc881cbdb57d2d144f19027a570b1ef3a7801df9c65e34d63b736a06e",
     "simulation/tests/test_analyses.py": "764c194710f661dc316546829dd980a5a42206f2f1e5ed123e8d2e0f9a3ed002",
     "simulation/uv.lock": "f900b068be96134e947dc901747a637eb9016f8b0f08e179589177980f8a6c16"
   },
   "artifacts": {
-    "simulation/output/results.json": "2a9d1932931ab306962da0eaab87f642e6218503360e6c5c3c6b9ddf64a9d23c",
-    "simulation/output/figures/geometry.png": "1f6e85f846f1e3a00c4078b8cf87f77014f5967cc522b1252cfe534fe22e0f16",
-    "simulation/output/figures/care.png": "b87a8cb7d9d2b1e4f8e781ff51d3ad2823ff485f0935f25926775ae02636541d",
-    "simulation/output/figures/entropy.png": "097797c6bbecd97ba29643d4066d1826b4278facbeb91562bd44f8a96b3134a8"
+    "simulation/output/results.json": "950fbf23dcb7e4ff3194933065702ce7034e54e463037bdb7896ca1ab8d58597",
+    "simulation/output/figures/geometry.png": "4229dc7472e603f6592af254c433d69bb91b709cdc515fa5bf0896b15d850e3f",
+    "simulation/output/figures/care.png": "04a8886a7a91d6bf47c0d161755718782fc154925128b7af5e8c1e8be7b701ae",
+    "simulation/output/figures/entropy.png": "3b29d719448e73a950039f60e7d5aae9aa594985e0ef978494d030355cae205e"
   }
 }
